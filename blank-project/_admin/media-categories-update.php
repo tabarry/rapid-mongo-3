@@ -122,7 +122,7 @@ $pageTitle = 'Update Media Categories';
                                 <!--SU STARTS-->
 
                                 <form class="form-horizontal" action="<?php echo ADMIN_URL; ?>media-categories-remote.php/update/" accept-charset="utf-8" name="suForm" id="suForm" method="post" target="remote" enctype="multipart/form-data">
-                                    <link rel="stylesheet" href="<?php echo BASE_URL; ?>sulata/themes/redmond/jquery-ui.css">
+
 
                                     <div class="gallery clearfix">
                                         <div class="form-group">
@@ -161,8 +161,8 @@ $pageTitle = 'Update Media Categories';
                                                 echo suInput('input', $arg);
                                                 ?>
                                                 <div><?php echo $getSettings['allowed_image_formats']; ?></div>
-                                                <?php if ((file_exists(ADMIN_UPLOAD_PATH . $row['mediacat__Picture'])) && ($row['mediacat__Picture'] != '')) { ?>
-                                                <div><a href="<?php echo BASE_URL . 'files/' . $row['mediacat__Picture']; ?>" target="_blank" class="underline"><?php echo VIEW_FILE; ?></a></div>
+                                                <?php if ((isset($row['mediacat__Picture']) && $row['mediacat__Picture'] != '') && (file_exists(ADMIN_UPLOAD_PATH . $row['mediacat__Picture']))) { ?>
+                                                    <div><a href="<?php echo BASE_URL . 'files/' . $row['mediacat__Picture']; ?>" target="_blank" class="underline"><?php echo VIEW_FILE; ?></a></div>
                                                 <?php } ?>    
                                             </div>
 
@@ -275,19 +275,20 @@ $pageTitle = 'Update Media Categories';
                                             </div>    
                                         </div>
 
-
-                                        <p>
-                                            <?php
-                                            $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
-                                            echo suInput('input', $arg);
-                                            ?>                              
-                                        </p>
+                                    </div>
+                                    <div class="lineSpacer clear"></div>
+                                    <p>
                                         <?php
-                                        //Id field
-                                        $arg = array('type' => 'hidden', 'name' => '_id', 'id' => '_id', 'value' => $id);
+                                        $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
                                         echo suInput('input', $arg);
-                                        ?>
-                                        <p>&nbsp;</p>
+                                        ?>                              
+                                    </p>
+                                    <?php
+                                    //Id field
+                                    $arg = array('type' => 'hidden', 'name' => '_id', 'id' => '_id', 'value' => $id);
+                                    echo suInput('input', $arg);
+                                    ?>
+                                    <p>&nbsp;</p>
                                 </form>
 
                                 <!--SU ENDS-->

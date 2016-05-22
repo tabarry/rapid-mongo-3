@@ -126,7 +126,7 @@ $pageTitle = 'Update Testimonials';
                                     <div class="gallery clearfix">
                                         <div class="form-group">
                                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">    
-         
+
                                                 <?php
                                                 //Label
                                                 $label = array('class' => $lblClass);
@@ -141,9 +141,9 @@ $pageTitle = 'Update Testimonials';
                                                 echo suInput('input', $arg);
                                                 ?>
                                             </div>
-                                        
+
                                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">    
-         
+
                                                 <?php
                                                 //Label
                                                 $label = array('class' => $lblClass);
@@ -194,17 +194,17 @@ $pageTitle = 'Update Testimonials';
                                                 echo suInput('input', $arg);
                                                 ?>
                                                 <script>
-                                            $(function() {
-                                                $('#testimonial__Date').datepicker({
-                                                    changeMonth: true,
-                                                    changeYear: true
-                                                });
-                                                $('#testimonial__Date').datepicker('option', 'yearRange', 'c-100:c+10');
-                                                $('#testimonial__Date').datepicker('option', 'dateFormat', '<?php echo DATE_FORMAT; ?>');
-                                                $('#testimonial__Date').datepicker('setDate', '<?php echo suDateFromDb($row['testimonial__Date']) ?>');
-                                            });
+                                                    $(function() {
+                                                        $('#testimonial__Date').datepicker({
+                                                            changeMonth: true,
+                                                            changeYear: true
+                                                        });
+                                                        $('#testimonial__Date').datepicker('option', 'yearRange', 'c-100:c+10');
+                                                        $('#testimonial__Date').datepicker('option', 'dateFormat', '<?php echo DATE_FORMAT; ?>');
+                                                        $('#testimonial__Date').datepicker('setDate', '<?php echo suDateFromDb(date('Y-m-d', $row['testimonial__Date']->sec)) ?>');
+                                                    });
 
-                                        </script>    
+                                                </script>    
                                             </div>
                                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">    
                                                 <label><?php echo $dbs_sulata_testimonials['testimonial__Status_req']; ?>Status:
@@ -216,22 +216,20 @@ $pageTitle = 'Update Testimonials';
                                                 ?>
                                             </div>
                                         </div>
-                                                                      
-
-
-
-                                        <p>
-                                            <?php
-                                            $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
-                                            echo suInput('input', $arg);
-                                            ?>                              
-                                        </p>
+                                    </div>
+                                    <div class="lineSpacer clear"></div>
+                                    <p>
                                         <?php
-                                        //Id field
-                                        $arg = array('type' => 'hidden', 'name' => '_id', 'id' => '_id', 'value' => $id);
+                                        $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
                                         echo suInput('input', $arg);
-                                        ?>
-                                        <p>&nbsp;</p>
+                                        ?>                              
+                                    </p>
+                                    <?php
+                                    //Id field
+                                    $arg = array('type' => 'hidden', 'name' => '_id', 'id' => '_id', 'value' => $id);
+                                    echo suInput('input', $arg);
+                                    ?>
+                                    <p>&nbsp;</p>
                                 </form>
 
                                 <!--SU ENDS-->

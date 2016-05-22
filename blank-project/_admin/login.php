@@ -6,6 +6,8 @@ include('../sulata/includes/connection.php');
 include('../sulata/includes/get-settings.php');
 include('../sulata/includes/db-structure.php');
 
+//Define variables
+$checkedVal = '';
 //Unset login sessions
 $_SESSION[SESSION_PREFIX . 'user__ID'] = '';
 $_SESSION[SESSION_PREFIX . 'user__Name'] = '';
@@ -23,7 +25,7 @@ $validateAsArray = array('user__Name_validateas' => 'required', 'user__Phone_val
 //---------
 
 /* login */
-if ($_GET['do'] == 'login') {
+if (isset($_GET['do']) && ($_GET['do'] == 'login')) {
 
     $col = new MongoCollection($db, 'sulata_users');
     try {
@@ -86,7 +88,7 @@ if ($_GET['do'] == 'login') {
     exit();
 }
 /* logout */
-if ($_GET['do'] == 'logout') {
+if (isset($_GET['do']) && ($_GET['do'] == 'logout')) {
     $_SESSION[SESSION_PREFIX . 'user__ID'] = '';
     $_SESSION[SESSION_PREFIX . 'user__Name'] = '';
     $_SESSION[SESSION_PREFIX . 'user__Email'] = '';
@@ -100,7 +102,7 @@ if ($_GET['do'] == 'logout') {
     exit();
 }
 /* retrieve */
-if ($_GET['do'] == 'retrieve') {
+if (isset($_GET['do']) && ($_GET['do'] == 'retrieve')) {
     $col = new MongoCollection($db, 'sulata_users');
     try {
         $criteria = array('_id' => new MongoId($id));
@@ -178,7 +180,7 @@ if ($_GET['do'] == 'retrieve') {
                         <form action="<?php echo ADMIN_URL; ?>login.php?do=login" accept-charset="utf-8" name="suForm" id="suForm" method="post" target="remote" >			
                             <div class="form-group">
                                 <?php
-                                if ($_COOKIE[SESSION_PREFIX . '_user__Remember'] != '') {
+                                if (isset($_COOKIE[SESSION_PREFIX . '_user__Remember']) && ($_COOKIE[SESSION_PREFIX . '_user__Remember'] != '')) {
                                     $userVal = $_COOKIE[SESSION_PREFIX . '_user__Remember'];
                                     $checkedValArray = array('checked' => 'checked');
                                 } else {

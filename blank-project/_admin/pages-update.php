@@ -122,7 +122,7 @@ $pageTitle = 'Update Pages';
                                 <!--SU STARTS-->
 
                                 <form class="form-horizontal" action="<?php echo ADMIN_URL; ?>pages-remote.php/update/" accept-charset="utf-8" name="suForm" id="suForm" method="post" target="remote" >
-                                    <link rel="stylesheet" href="<?php echo BASE_URL; ?>sulata/themes/redmond/jquery-ui.css">
+
 
                                     <div class="gallery clearfix">
                                         <div class="form-group">
@@ -305,19 +305,20 @@ $pageTitle = 'Update Pages';
                                             </div>    
                                         </div>
 
-
-                                        <p>
-                                            <?php
-                                            $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
-                                            echo suInput('input', $arg);
-                                            ?>                              
-                                        </p>
+                                    </div>
+                                    <div class="lineSpacer clear"></div>
+                                    <p>
                                         <?php
-                                        //Id field
-                                        $arg = array('type' => 'hidden', 'name' => '_id', 'id' => '_id', 'value' => $id);
+                                        $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
                                         echo suInput('input', $arg);
-                                        ?>
-                                        <p>&nbsp;</p>
+                                        ?>                              
+                                    </p>
+                                    <?php
+                                    //Id field
+                                    $arg = array('type' => 'hidden', 'name' => '_id', 'id' => '_id', 'value' => $id);
+                                    echo suInput('input', $arg);
+                                    ?>
+                                    <p>&nbsp;</p>
                                 </form>
 
                                 <!--SU ENDS-->

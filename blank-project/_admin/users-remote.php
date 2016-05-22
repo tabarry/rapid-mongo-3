@@ -14,7 +14,7 @@ $validateAsArray = array('user__Name_validateas' => 'required', 'user__Phone_val
 //Check to stop page opening outside iframe
 //Deliberately disabled for list and delete conditions
 $do = suSegment(1);
-if (($_GET["do"] != "check") && ($_GET["do"] != "autocomplete")) {
+if (isset($_GET["do"]) && ($_GET["do"] != "check") && ($_GET["do"] != "autocomplete")) {
     suFrameBuster();
 }
 ?>
@@ -57,7 +57,7 @@ if ($do == "add") {
 
     $col = $db->sulata_users;
 
-    $data = array('user__Name' => suStrip($_POST['user__Name']), 'user__Phone' => suStrip($_POST['user__Phone']), 'user__Email' => suStrip($_POST['user__Email']), 'user__Name_slug' => suSlugifyString($_POST['user__Name']), 'user__Password' => suCrypt(suStrip($_POST['user__Password'])), 'user__Status' => suStrip($_POST['user__Status']), 'user__Type' => 'Admin', 'user__Notes' => suStrip($_POST['user__Notes']), 'user__Theme' => suStrip($_POST['user__Theme']), 'user__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'user__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'user__dbState' => 'Live');
+    $data = array('user__Name' => suStrip($_POST['user__Name']), 'user__Phone' => suStrip($_POST['user__Phone']), 'user__Email' => suStrip($_POST['user__Email']), 'user__Name_slug' => suSlugifyString($_POST['user__Name']), 'user__Password' => suCrypt(suStrip($_POST['user__Password'])), 'user__Status' => suStrip($_POST['user__Status']), 'user__Type' => 'Admin', 'user__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'user__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'user__dbState' => 'Live');
     $data = array_merge($data, $extraSql);
 
     try {
@@ -74,7 +74,7 @@ if ($do == "add") {
         /* POST INSERT PLACE */
 
 //Send login details to user
-        if ($_POST['send_to_user'] == 'Yes') {
+        if ((isset($_POST['send_to_user'])) && ($_POST['send_to_user'] == 'Yes')) {
             if ($getSettings['google_login'] == 1) {
                 $email = file_get_contents('../sulata/mails/new-user-gmail.html');
             } else {
@@ -156,7 +156,7 @@ if ($do == "update") {
 
     $col = $db->sulata_users;
 
-    $data = array('user__Name' => suStrip($_POST['user__Name']), 'user__Phone' => suStrip($_POST['user__Phone']), 'user__Email' => suStrip($_POST['user__Email']), 'user__Email_slug' => suSlugifyString($_POST['user__Email']), 'user__Password' => suCrypt(suStrip($_POST['user__Password'])), 'user__Status' => suStrip($_POST['user__Status']), 'user__Notes' => suStrip($_POST['user__Notes']), 'user__Theme' => suStrip($_POST['user__Theme']), 'user__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'user__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'user__dbState' => 'Live');
+    $data = array('user__Name' => suStrip($_POST['user__Name']), 'user__Phone' => suStrip($_POST['user__Phone']), 'user__Email' => suStrip($_POST['user__Email']), 'user__Email_slug' => suSlugifyString($_POST['user__Email']), 'user__Password' => suCrypt(suStrip($_POST['user__Password'])), 'user__Status' => suStrip($_POST['user__Status']), 'user__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'user__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'user__dbState' => 'Live');
     $data = array_merge($data, $extraSql);
 
 

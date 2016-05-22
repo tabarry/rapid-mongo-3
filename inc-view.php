@@ -28,23 +28,12 @@ for ($i = 0; $i <= sizeof($_POST['frmShow']) - 1; $i++) {
         if (strstr($_POST['frmShow'][$i], '_Date')) {
             $fieldsToShow .= "<th style=\"width:" . $colSize . "%\">" . makeFieldLabel($_POST['frmShow'][$i]) . "</th>\n";
             $fieldsToLoop .= "\$" . $_POST['frmShow'][$i] . "[\$key] = \$value['" . $_POST['frmShow'][$i] . "'];\n";
-            /* $colData .= "<td><?php echo suUnstrip(\$doc['" . $_POST['frmShow'][$i] . "2']);?></td>\n"; */
+            
             $colData .= "<td><?php echo date('F d, Y', \$doc['" . $_POST['frmShow'][$i] . "']->sec);?></td>\n";
         } else {
             $fieldsToShow .= "<th style=\"width:" . $colSize . "%\">" . makeFieldLabel($_POST['frmShow'][$i]) . "</th>\n";
             $fieldsToLoop .= "\$" . $_POST['frmShow'][$i] . "[\$key] = \$value['" . $_POST['frmShow'][$i] . "'];\n";
-            /*
-            if ($_POST['frmShow'][$i] == $f1) {
-
-                $colData .= "<td>\n<?php\n"
-                        . "sort(\$doc['" . $_POST['frmShow'][$i] . "']);\n"
-                        . "foreach (\$doc['" . $_POST['frmShow'][$i] . "'] as \$fieldValue) {\n\techo suUnstrip(\$fieldValue).'. ';\n}\n"
-                        . "?>\n</td>\n";
-            } else {
-                $colData .= "<td><?php echo suUnstrip(\$doc['" . $_POST['frmShow'][$i] . "']);?></td>\n";
-            }
-             * 
-             */
+           
             $colData .= "<td><?php echo suUnstrip(\$doc['" . $_POST['frmShow'][$i] . "']);?></td>\n";
         }
         if (!stristr($_POST['frmShow'][$i], '__ID')) {
@@ -63,8 +52,7 @@ for ($i = 0; $i <= sizeof($_POST['frmShow']) - 1; $i++) {
 
     if (strstr($_POST['frmShow'][$i], '_Date')) {
         $fieldsToShowRemote .= $_POST['frmShow'][$i] . ",";
-        //$fieldsToShowRemote .= " DATE_FORMAT(" . $_POST['frmShow'][$i] . ", '%b %d, %y') AS " . $_POST['frmShow'][$i] . "2,";
-        //$fieldsWithQuotes .= " DATE_FORMAT(" . $_POST['frmShow'][$i] . ", '%b %d, %y') AS " . $_POST['frmShow'][$i] . "2,";
+        
         if (!stristr($_POST['frmShow'][$i], '__ID')) {
             $fieldsToShowRemote .= $_POST['frmShow'][$i] . ",";
 
@@ -91,14 +79,11 @@ $colData.="
                                             <?php } ?>
                                             
 ";
-/* $fieldsToShow .= "
-  edit: {title: '',width: '2%',sorting:false,list:<?php echo \$editAccess; ?>},"; */
 
 $fieldsToShow .= "<?php if ((\$editAccess == TRUE) || (\$deleteAccess == TRUE)) { ?>"
         . "\n<th style=\"width:10%\">&nbsp;</th>\n"
         . "<?php } ?>";
 
-//$fieldsToShow = substr($fieldsToShow, 0, -1);
 
 
 $fieldsToShowRemote = substr($fieldsToShowRemote, 0, -1);
@@ -119,7 +104,7 @@ $viewCode = "
                                         <div class=\"col-xs-5 col-sm-2 col-md-2 col-lg-2\">
                                         <input id=\"Submit\" type=\"submit\" value=\"Search\" name=\"Submit\" class=\"btn btn-primary pull-right\">
                                         </div>
-                                        <?php if(\$_GET['q']){?>
+                                        <?php if (isset(\$_GET['q'])) { ?>
                                         <div class=\"lineSpacer clear\"></div>
                                          <div class=\"pull-right\"><a style=\"text-decoration:underline !important;\" href=\"<?php echo ADMIN_URL;?>" . $_POST['frmFormsetvalue'] . ".php\">Clear search.</a></div>
                                         <?php } ?>
@@ -185,16 +170,16 @@ $csvDownloadCode = "
 \$col = new MongoCollection(\$db, '" . $_POST['table'] . "');
 
 //Search
-if (\$_GET['q'] != '') {
+if (isset(\$_GET['q'])) {
     \$criteria = array('" . $fieldPrefix . "__dbState' => 'Live', '" . $_POST['frmSearch'] . "' => new MongoRegex(\"/\" . \$_GET['q'] . \"/i\"));
 } else {
     \$criteria = array('" . $fieldPrefix . "__dbState' => 'Live');
 }
 //Paginate
-if (!\$_GET['start']) {
+if (!isset(\$_GET['start'])) {
     \$_GET['start'] = 0;
 }
-if (!\$_GET['sr']) {
+if (!isset(\$_GET['sr'])) {
     \$sr = 0;
 } else {
     \$sr = \$_GET['sr'];
@@ -205,15 +190,19 @@ if (!\$_GET['sr']) {
 //Default sort
 \$sortOrder = array('" . $_POST['frmSearch'] . "_slug' => 1);
 //Sort
-if (\$_GET['sort'] != '') {
+if (isset(\$_GET['sort']) && (\$_GET['sort'] != '')) {
     if (\$_GET['sort'] == 'asc') {
-        \$sortOrder = array(\$_GET['f'] => 1);
+        if (isset(\$_GET['f'])) {
+            \$sortOrder = array(\$_GET['f'] => 1);
+        }
     } else {
-        \$sortOrder = array(\$_GET['f'] => -1);
+        if (isset(\$_GET['f'])) {
+            \$sortOrder = array(\$_GET['f'] => -1);
+        }
     }
-    \$row = \$col->find(\$criteria,\$selectedFields)->sort(\$sortOrder)->limit(\$getSettings['page_size'])->skip(\$_GET['start']);
+    \$row = \$col->find(\$criteria, \$selectedFields)->sort(\$sortOrder)->limit(\$getSettings['page_size'])->skip(\$_GET['start']);
 } else {
-    \$row = \$col->find(\$criteria,\$selectedFields)->sort(\$sortOrder)->limit(\$getSettings['page_size'])->skip(\$_GET['start']);
+    \$row = \$col->find(\$criteria, \$selectedFields)->sort(\$sortOrder)->limit(\$getSettings['page_size'])->skip(\$_GET['start']);
 }
 
 \$numDocs = \$col->count(\$criteria,\$selectedFields);

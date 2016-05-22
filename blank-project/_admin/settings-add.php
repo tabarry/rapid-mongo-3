@@ -101,7 +101,7 @@ $addAccess = FALSE;
                                 <!--SU STARTS-->
 
                                 <form class="form-horizontal" action="<?php echo ADMIN_URL; ?>settings-remote.php/add/" accept-charset="utf-8" name="suForm" id="suForm" method="post" target="remote" >
-                                    <link rel="stylesheet" href="<?php echo BASE_URL; ?>sulata/themes/redmond/jquery-ui.css">
+
 
                                     <div class="gallery clearfix">
                                         <div class="form-group">
@@ -172,10 +172,10 @@ $addAccess = FALSE;
                                     </div>
                                     <div class="lineSpacer clear"></div>
                                     <p>
-<?php
-$arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
-echo suInput('input', $arg);
-?>                              
+                                        <?php
+                                        $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
+                                        echo suInput('input', $arg);
+                                        ?>                              
                                     </p>
                                     <p>&nbsp;</p>
                                 </form>
@@ -183,7 +183,7 @@ echo suInput('input', $arg);
                                 <!--SU ENDS-->
                             </div>
                         </div>
-<?php include('inc-site-footer.php'); ?>
+                        <?php include('inc-site-footer.php'); ?>
                     </div>
                 </div>
 
@@ -193,9 +193,9 @@ echo suInput('input', $arg);
 
             <div class="clearfix"></div>
         </div>
-<?php include('inc-footer.php'); ?>
+        <?php include('inc-footer.php'); ?>
         <?php suIframe(); ?>  
     </body>
     <!--PRETTY PHOTO-->
-<?php include('inc-pretty-photo.php'); ?>    
+    <?php include('inc-pretty-photo.php'); ?>    
 </html>

@@ -2,7 +2,7 @@
 
 $thisVal = "\$today";
 if ($doUpdate == TRUE) {
-    $thisVal = "suDateFromDb(\$row['" . $_POST['frmField'][$i] . "'])";
+    $thisVal = "suDateFromDb(date('Y-m-d', \$row['" . $_POST['frmField'][$i] . "']->sec))";
 }
 $addCode .="
 <div class=\"form-group\">

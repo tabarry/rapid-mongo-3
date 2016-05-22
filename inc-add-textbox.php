@@ -1,4 +1,5 @@
 <?php
+            echo "<script>alert('" . $_POST['frmType'][$i] . "')</script>";
 
 if ($doUpdate == TRUE) {
     $updateValue = " , 'value'=>suUnstrip(\$row['" . $_POST['frmField'][$i] . "'])";

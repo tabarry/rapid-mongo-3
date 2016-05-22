@@ -101,7 +101,7 @@ $pageTitle = 'Add Users';
                                 <!--SU STARTS-->
 
                                 <form class="form-horizontal" action="<?php echo ADMIN_URL; ?>users-remote.php/add/" accept-charset="utf-8" name="suForm" id="suForm" method="post" target="remote" enctype="multipart/form-data">
-                                    <link rel="stylesheet" href="<?php echo BASE_URL; ?>sulata/themes/redmond/jquery-ui.css">
+
 
                                     <div class="gallery clearfix">
                                         <div class="form-group">

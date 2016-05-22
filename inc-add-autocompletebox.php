@@ -25,10 +25,7 @@ if ($doUpdate == TRUE) {
     $updateFieldValue = "
         
         //Get the field value
-        \$sqlVal = \"SELECT " . $fieldText . "  FROM " . $table . " WHERE " . $fieldPrefix1 . "__dbState='Live' AND  " . $fieldPrefix1 . "__ID = '\" . \$row['" . $_POST['frmField'][$i] . "'] . \"' \";
-        \$resultVal = suQuery(\$sqlVal);
-        \$rowVal = suFetch(\$resultVal);
-        \$row['" . $_POST['frmField'][$i] . "'] = \$rowVal['" . $fieldText . "'];
+        //\$row['" . $_POST['frmField'][$i] . "'] = \$rowVal['" . $fieldText . "'];
        ";
 } else {
     $autoCompleteFrameBuster .= ' && ($_GET["do"] != "autocomplete' . $autoCompleteCount . '") ';
@@ -74,7 +71,7 @@ $remoteCodeAutoInsert .= ""
 ;
 $remoteCodeAutoComplete .= "
 //if autocomplete
-if (\$_GET['do'] == 'autocomplete" . $autoCompleteCount . "') {
+if (isset(\$_GET['do']) && (\$_GET['do'] == 'autocomplete" . $autoCompleteCount . "')) {
 
 
     \$col = new MongoCollection(\$db, '".$table."');

@@ -5,22 +5,23 @@ include('../sulata/includes/connection.php');
 include('../sulata/includes/get-settings.php');
 include('../sulata/includes/db-structure.php');
 checkLogin();
+
 $pageName = 'Manage Settings';
 $pageTitle = 'Manage Settings';
 $addAccess = FALSE;
 $col = new MongoCollection($db, 'sulata_settings');
 
 //Search
-if ($_GET['q'] != '') {
+if (isset($_GET['q'])) {
     $criteria = array('setting__dbState' => 'Live', 'setting__Type' => 'Public', 'setting__Key' => new MongoRegex("/" . $_GET['q'] . "/i"));
 } else {
     $criteria = array('setting__dbState' => 'Live', 'setting__Type' => 'Public');
 }
 //Paginate
-if (!$_GET['start']) {
+if (!isset($_GET['start'])) {
     $_GET['start'] = 0;
 }
-if (!$_GET['sr']) {
+if (!isset($_GET['sr'])) {
     $sr = 0;
 } else {
     $sr = $_GET['sr'];
@@ -31,11 +32,15 @@ $selectedFields = array('setting__Setting' => 1, 'setting__Value' => 1, 'setting
 //Default sort
 $sortOrder = array('setting__Setting_slug' => 1);
 //Sort
-if ($_GET['sort'] != '') {
+if (isset($_GET['sort']) && ($_GET['sort'] != '')) {
     if ($_GET['sort'] == 'asc') {
-        $sortOrder = array($_GET['f'] => 1);
+        if (isset($_GET['f'])) {
+            $sortOrder = array($_GET['f'] => 1);
+        }
     } else {
-        $sortOrder = array($_GET['f'] => -1);
+        if (isset($_GET['f'])) {
+            $sortOrder = array($_GET['f'] => -1);
+        }
     }
     $row = $col->find($criteria, $selectedFields)->sort($sortOrder)->limit($getSettings['page_size'])->skip($_GET['start']);
 } else {
@@ -162,7 +167,7 @@ if (suSegment(1) == 'stream-pdf' && $downloadAccessPDF == TRUE) {
                                         <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
                                             <input id="Submit" type="submit" value="Search" name="Submit" class="btn btn-primary pull-right">
                                         </div>
-                                        <?php if ($_GET['q']) { ?>
+                                        <?php if (isset($_GET['q'])) { ?>
                                             <div class="lineSpacer clear"></div>
                                             <div class="pull-right"><a style="text-decoration:underline !important;" href="<?php echo ADMIN_URL; ?>settings.php">Clear search.</a></div>
                                         <?php } ?>

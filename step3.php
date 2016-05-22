@@ -101,7 +101,9 @@ set_time_limit(0);
                                         if ($row[6] == "auto_increment") {
                                             $showChk = "checked='checked'";
                                         }
+                                        
                                         ?>
+                                    
                                         <?php if ((!stristr($row[0], '__Last_Action_On')) && (!stristr($row[0], '__Last_Action_By')) && (!stristr($row[0], '__dbState'))) { ?>
                                             <tr <?php echo $hide; ?>>
                                                 <td class="rowData" width="4%">&nbsp;<?php echo $cnt; ?>.</td>

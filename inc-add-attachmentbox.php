@@ -10,6 +10,7 @@ $addCode .="
     
                                 <?php
                                 //Label
+                                \$lblClass = suShowLabels(TRUE);
                                 \$label = array('class' => \$lblClass);
                                 echo suInput('label', \$label, \$dbs_" . $_POST['table'] . "['" . $_POST['frmField'][$i] . "_req'] . '" . $_POST['frmLabel'][$i] . ":', TRUE);
                                 //Input
@@ -20,19 +21,26 @@ $addCode .="
                                     \$arg = array_merge(\$placeholder, \$arg);
                                 }
                                 echo suInput('input', \$arg);
+                                \$lblClass = suShowLabels();
                                 ?>
 </div>
 </div>
                                ";
 if ($doUpdate == TRUE) {
     $addCode .="
-    <?php if(file_exists(ADMIN_UPLOAD_PATH . \$row['" . $_POST['frmField'][$i] . "'])){?>
+    <?php 
+    if (!isset(\$row['" . $_POST['frmField'][$i] . "'])) {
+        \$row['" . $_POST['frmField'][$i] . "'] = '';
+    }
+    if ((isset(\$row['" . $_POST['frmField'][$i] . "']) && \$row['" . $_POST['frmField'][$i] . "'] != '') && (file_exists(ADMIN_UPLOAD_PATH . \$row['" . $_POST['frmField'][$i] . "']))) { 
+    ?>
     <a href=\"<?php echo BASE_URL.'files/'.\$row['" . $_POST['frmField'][$i] . "'] ;?>\" target=\"_blank\" class=\"underline\"><?php echo VIEW_FILE;?></a>
     <?php } ?>
     ";
 }
 $addCode .="
 <div><?php echo \$getSettings['allowed_attachment_formats']; ?></div>
+<p>&nbsp;</p>
 
 ";
 if ($doUpdate == TRUE) {
@@ -52,7 +60,9 @@ $extraSqlx3 = "
         \$extraSql['" . $_POST['frmField'][$i] . "'] = \$uploadPath . \$" . $_POST['frmField'][$i] . ";
 
     }else{
-            \$extraSql['" . $_POST['frmField'][$i] . "'] = \$_POST['previous_" . $_POST['frmField'][$i] . "'];
+            if (isset(\$_POST['" . $_POST['frmField'][$i] . "']) && (\$_POST['" . $_POST['frmField'][$i] . "'] != '')) {
+                \$extraSql['" . $_POST['frmField'][$i] . "'] = \$_POST['previous_" . $_POST['frmField'][$i] . "'];
+            }
     }
 ";
 $uploadCheck.="
@@ -67,4 +77,5 @@ $resetUploadValidation.="
     \$dbs_" . $_POST['table'] . "['" . $_POST['frmField'][$i] . "_req']='';
 
 ";
+
 ?>

@@ -133,8 +133,7 @@ $pageTitle = 'Modules';
 
                                                 //Table view or card view
                                                 if ($getSettings['table_or_card'] == 'card') {
-                                                    $file = str_replace('.php', '-cards.php', $file);                                                
-                                                    
+                                                    $file = str_replace('.php', '-cards.php', $file);
                                                 }
 
                                                 $fileNameShow = str_replace('_', ' ', $fileName);

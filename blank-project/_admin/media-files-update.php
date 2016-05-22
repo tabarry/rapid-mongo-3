@@ -122,7 +122,7 @@ $pageTitle = 'Update Media Files';
                                 <!--SU STARTS-->
 
                                 <form class="form-horizontal" action="<?php echo ADMIN_URL; ?>media-files-remote.php/update/" accept-charset="utf-8" name="suForm" id="suForm" method="post" target="remote" enctype="multipart/form-data">
-                                    <link rel="stylesheet" href="<?php echo BASE_URL; ?>sulata/themes/redmond/jquery-ui.css">
+
 
                                     <div class="gallery clearfix">
                                         <div class="form-group">
@@ -164,7 +164,7 @@ $pageTitle = 'Update Media Files';
                                                 $arg = array('type' => $dbs_sulata_media_files['mediafile__Picture_html5_type'], 'name' => 'mediafile__Picture', 'id' => 'mediafile__Picture');
                                                 echo suInput('input', $arg);
                                                 ?>
-                                                <?php if ((file_exists(ADMIN_UPLOAD_PATH . $row['mediafile__Picture'])) && ($row['mediafile__Picture'] != '')) { ?>
+                                                <?php if ((isset($row['mediafile__Picture']) && $row['mediafile__Picture'] != '') && (file_exists(ADMIN_UPLOAD_PATH . $row['mediafile__Picture']))) { ?>
 
                                                 <?php } ?>    
                                                 <div> 
@@ -256,25 +256,26 @@ $pageTitle = 'Update Media Files';
                                                 });
                                                 $('#mediafile__Date').datepicker('option', 'yearRange', 'c-100:c+10');
                                                 $('#mediafile__Date').datepicker('option', 'dateFormat', '<?php echo DATE_FORMAT; ?>');
-                                                $('#mediafile__Date').datepicker('setDate', '<?php echo suDateFromDb($row['mediafile__Date']) ?>');
+                                                $('#mediafile__Date').datepicker('setDate', '<?php echo suDateFromDb(date('Y-m-d', $row['mediafile__Date']->sec)) ?>');
                                             });
 
                                         </script>                                  
 
 
-
-                                        <p>
-                                            <?php
-                                            $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
-                                            echo suInput('input', $arg);
-                                            ?>                              
-                                        </p>
+                                    </div>
+                                    <div class="lineSpacer clear"></div>
+                                    <p>
                                         <?php
-                                        //Id field
-                                        $arg = array('type' => 'hidden', 'name' => '_id', 'id' => '_id', 'value' => $id);
+                                        $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
                                         echo suInput('input', $arg);
-                                        ?>
-                                        <p>&nbsp;</p>
+                                        ?>                              
+                                    </p>
+                                    <?php
+                                    //Id field
+                                    $arg = array('type' => 'hidden', 'name' => '_id', 'id' => '_id', 'value' => $id);
+                                    echo suInput('input', $arg);
+                                    ?>
+                                    <p>&nbsp;</p>
                                 </form>
 
                                 <!--SU ENDS-->

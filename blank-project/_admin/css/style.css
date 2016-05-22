@@ -68,7 +68,14 @@ hr{
 ::-moz-focus-inner {
     border:0;
 }
-
+/* Image Thumb */
+.imgThumb{
+    width:100px;
+    height: 100px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
 /* Form */
 
 form{

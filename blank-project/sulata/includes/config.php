@@ -6,7 +6,10 @@
  * Version: #VERSION#
  * Date: March 1, 2016
  */
-
+//Check the required PHP version 5.2 or greater
+if (PHP_VERSION_ID < 50200) {
+    exit('You require PHP version 5.2 or greater.');
+}
 //Include the language file
 include('language.php');
 //MISC SETTINGS
@@ -22,7 +25,10 @@ define('COOKIE_EXPIRY_DAYS', '30');
 //Other settings are in sulata_settings table
 //If local
 if (!strstr($_SERVER['HTTP_HOST'], ".")) {
+    //DEBUG
     define('DEBUG', TRUE);
+    ini_set('display_errors', 1);
+    //
     define('BASE_URL', LOCAL_URL);
     define('ADMIN_URL', BASE_URL . '_admin/');
     define('PING_URL', BASE_URL . 'static/ping.html');
@@ -40,7 +46,10 @@ if (!strstr($_SERVER['HTTP_HOST'], ".")) {
     define('DB_PORT', '27017');
     define('DB_CONNECTION_STRING', "mongodb://" . DB_HOST . ":" . DB_PORT);
 } else {
+    //DEBUG
     define('DEBUG', FALSE);
+    ini_set('display_errors', 0);
+    //
     define('BASE_URL', WEB_URL);
     define('ADMIN_URL', BASE_URL . '_admin/');
     define('PING_URL', BASE_URL . 'sulata/ping.html');

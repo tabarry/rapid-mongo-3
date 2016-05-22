@@ -16,19 +16,24 @@ function suErrorNo() {
     global $link;
     return mysqli_errno($link);
 }
-function suFetch($result){
+
+function suFetch($result) {
     return mysqli_fetch_array($result);
 }
-function suFree($result){
+
+function suFree($result) {
     return mysqli_free_result($result);
 }
-function suClose($link){
+
+function suClose($link) {
     return mysqli_close($link);
 }
-function suNumRows($result){
+
+function suNumRows($result) {
     return mysqli_num_rows($result);
 }
-function suInsertId(){
+
+function suInsertId() {
     global $link;
     return mysqli_insert_id($link);
 }
@@ -87,6 +92,12 @@ function makeFieldType($comments, $fld_name, $fld_type, $ddValue) {
                 $sel = "Picture field";
             } elseif (stristr($fld_name, "password")) {
                 $sel = "Password";
+            } elseif (stristr($fld_name, "URL")) {
+                $sel = "URL";
+            } elseif (stristr($fld_name, "CC")) {
+                $sel = "Credit Card";
+            } elseif (stristr($fld_name, "IP")) {
+                $sel = "IP";
             } else {
                 $sel = "Textbox";
             }
@@ -192,7 +203,7 @@ function suWrite($path, $content) {
     }
     if (file_exists($filename) == true) {
         $pageName = preg_replace("/.*\/\w+\//", "", $filename);
-        @copy($filename, $backupPath . date('Y-m-d-H-i-s') . "-backup." . $pageName);
+        //@copy($filename, $backupPath . date('Y-m-d-H-i-s') . "-backup." . $pageName);
     }
 
     @unlink($filename);

@@ -128,12 +128,18 @@ if ($numDocs == 0) {
                                     <p></p>
                                 </div>
                                 <!--SU STARTS-->
-                                <?php if ((file_exists(ADMIN_UPLOAD_PATH . $row['user__Picture'])) && ($row['user__Picture'] != '')) { ?>
-                                    <img  border='0' class="imgBorder" src="<?php echo BASE_URL . 'files/' . $row['user__Picture']; ?>"/>
-                                    <p>&nbsp;</p>
-                                <?php } ?> 
+                                <?php
+                                if ((isset($row['user__Picture']) && $row['user__Picture'] != '') && (file_exists(ADMIN_UPLOAD_PATH . $row['user__Picture']))) {
+                                    $userImage = BASE_URL . 'files/' . $row['user__Picture'];
+                                } else {
+                                    $userImage = BASE_URL . 'files/default-user.png';
+                                }
+                                ?>
+
+                                <div class="imgThumb" style="background-image:url(<?php echo $userImage; ?>);"></div>
+
                                 <form class="form-horizontal" action="<?php echo ADMIN_URL; ?>users-remote.php/update/" accept-charset="utf-8" name="suForm" id="suForm" method="post" target="remote" enctype="multipart/form-data">
-                                    <link rel="stylesheet" href="<?php echo BASE_URL; ?>sulata/themes/redmond/jquery-ui.css">
+
 
                                     <div class="gallery clearfix">
                                         <div class="form-group">
@@ -228,7 +234,7 @@ if ($numDocs == 0) {
                                         <div class="form-group">
                                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" <?php echo $editAccess; ?>>
                                                 <label><?php echo $dbs_sulata_users['user__Status_req']; ?>Status:
-                                                    
+
                                                 </label>
                                                 <?php
                                                 $options = $dbs_sulata_users['user__Status_array'];
@@ -243,35 +249,39 @@ if ($numDocs == 0) {
                                                 $arg = array('type' => $dbs_sulata_users['user__Picture_html5_type'], 'name' => 'user__Picture', 'id' => 'user__Picture');
                                                 echo suInput('input', $arg);
                                                 ?>
-                                                <?php if ((file_exists(ADMIN_UPLOAD_PATH . $row['user__Picture'])) && ($row['user__Picture'] != '')) { ?>
-                                            <a href="<?php echo BASE_URL . 'files/' . $row['user__Picture']; ?>" target="_blank"><?php echo VIEW_FILE; ?></a>
-                                        <?php } ?>    
+                                                <?php if ((isset($row['user__Picture']) && $row['user__Picture'] != '') && (file_exists(ADMIN_UPLOAD_PATH . $row['user__Picture']))) { ?>
+                                                    <a href="<?php echo BASE_URL . 'files/' . $row['user__Picture']; ?>" target="_blank"><?php echo VIEW_FILE; ?></a>
+                                                <?php } ?>    
 
-                                        <div><?php echo $getSettings['allowed_image_formats']; ?></div>
+                                                <div><?php echo $getSettings['allowed_image_formats']; ?></div>
 
                                             </div>
                                         </div>
 
-                                        
+
 
                                         <?php
+                                        if (!isset($row['user__Picture'])) {
+                                            $row['user__Picture'] = '';
+                                        }
                                         $arg = array('type' => 'hidden', 'name' => 'previous_user__Picture', 'id' => 'previous_user__Picture', 'value' => $row['user__Picture']);
                                         echo suInput('input', $arg);
                                         ?>   
 
-
-                                        <p>
-                                            <?php
-                                            $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
-                                            echo suInput('input', $arg);
-                                            ?>                              
-                                        </p>
+                                    </div>
+                                    <div class="lineSpacer clear"></div>
+                                    <p>
                                         <?php
-                                        //Id field
-                                        $arg = array('type' => 'hidden', 'name' => '_id', 'id' => '_id', 'value' => $id);
+                                        $arg = array('type' => 'submit', 'name' => 'Submit', 'id' => 'Submit', 'value' => 'Submit', 'class' => 'btn btn-primary pull-right');
                                         echo suInput('input', $arg);
-                                        ?>
-                                        <p>&nbsp;</p>
+                                        ?>                              
+                                    </p>
+                                    <?php
+                                    //Id field
+                                    $arg = array('type' => 'hidden', 'name' => '_id', 'id' => '_id', 'value' => $id);
+                                    echo suInput('input', $arg);
+                                    ?>
+                                    <p>&nbsp;</p>
                                 </form>
 
                                 <!--SU ENDS-->

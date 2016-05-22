@@ -79,7 +79,7 @@ if ($_GET['type'] == 'chk') {
     $col = new MongoCollection($db, $tbl);
     $criteria = array($stateField => 'Live');
     $sort = array($f2 => 1);
-    $fields = array($f1 => 1,$f2 => 1);
+    $fields = array($f1 => 1, $f2 => 1);
     $row = $col->find($criteria, $fields)->sort($sort);
     foreach ($row as $doc) {
         $dd.="<option value='" . $doc[$f1] . "'>" . suUnstrip($doc[$f2]) . "</option>";

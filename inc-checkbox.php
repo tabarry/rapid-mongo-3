@@ -105,7 +105,7 @@ sort(\$chkArr);
     \$chkUid = suSlugifyName(\$fieldValue);
     array_push(\$chkArr, addslashes(suUnstrip(\$fieldValue)));
     ?>
-    <table id=\"chkTbl<?php echo \$chkUid; ?>\" class=\"checkTable\"><tbody><tr><td class=\"checkTd\"><?php echo suUnstrip(\$fieldValue); ?></td><td onclick=\"removeCheckbox('<?php echo \$chkUid; ?>')\" class=\"checkTdCancel\"><a onclick=\"removeCheckbox('<?php echo \$chkUid; ?>')\" href=\"javascript:;\">x</a></td></tr><input type=\"hidden\" name=\"people__Cars[]\" value=\"<?php echo suUnstrip(\$fieldValue); ?>\"></tbody></table>
+    <table id=\"chkTbl<?php echo \$chkUid; ?>\" class=\"checkTable\"><tbody><tr><td class=\"checkTd\"><?php echo suUnstrip(\$fieldValue); ?></td><td onclick=\"removeCheckbox('<?php echo \$chkUid; ?>')\" class=\"checkTdCancel\"><a onclick=\"removeCheckbox('<?php echo \$chkUid; ?>')\" href=\"javascript:;\">x</a></td></tr><input type=\"hidden\" name=\"".$f2a."[]\" value=\"<?php echo suUnstrip(\$fieldValue); ?>\"></tbody></table>
 <?php } ?>
 </div>                                
 <p class=\"clearfix\">&nbsp;</p>   
@@ -149,7 +149,7 @@ if (in_array(\$chkDoc['" . $f1 . "'], \$chkArr)) {
 //Validate remote
     $validateAddRemote = "
 //Check if at least one checkbox is selected
-if (sizeof(\$_POST['" . $f2a . "'])==0) {
+if (isset(\$_POST['" . $f2a . "']) && sizeof(\$_POST['" . $f2a . "'])==0) {
     \$vError[]=VALIDATE_EMPTY_CHECKBOX;
 }  
 ";
@@ -168,7 +168,9 @@ suQuery(\$sql);
 //Add details data
         \$chkArray = array();
         for (\$i = 0; \$i <= sizeof(\$_POST['" . $f2a . "'])-1; \$i++) {
-            array_push(\$chkArray,\$_POST['" . $f2a . "'][\$i]);
+            if (isset(\$_POST['" . $f2a . "'][\$i])) {
+                array_push(\$chkArray,\$_POST['" . $f2a . "'][\$i]);
+            }
         }
         \$data = array(
         '\$set' => array('" . $justFieldName . "' => \$chkArray)

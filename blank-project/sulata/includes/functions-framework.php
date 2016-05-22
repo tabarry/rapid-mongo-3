@@ -92,9 +92,11 @@ if (!function_exists('suFrameBuster')) {
 if (!function_exists('suSegment')) {
 
     function suSegment($segment) {
-        $path = $_SERVER['PATH_INFO'];
-        $path = explode('/', $path);
-        return $path[$segment];
+        if (isset($_SERVER['PATH_INFO'])) {
+            $path = $_SERVER['PATH_INFO'];
+            $path = explode('/', $path);
+            return $path[$segment];
+        }
     }
 
 }
@@ -242,7 +244,9 @@ if (!function_exists('suExit')) {
 if (!function_exists('suStrip')) {
 
     function suStrip($str) {
-        $str = trim(addslashes($str));
+        if (isset($str) && !is_array($str)) {
+            $str = trim(addslashes($str));
+        }
         return $str;
     }
 
@@ -480,8 +484,9 @@ if (!function_exists('suDateFromDb')) {
 if (!function_exists('checkLogin')) {
 
     function checkLogin() {
+
         //Check if logged in
-        if ($_SESSION[SESSION_PREFIX . 'user__ID'] == '') {
+        if (!isset($_SESSION[SESSION_PREFIX . 'user__ID']) || ($_SESSION[SESSION_PREFIX . 'user__ID'] == '')) {
             $url = ADMIN_URL . 'login.php';
             suPrintJs("parent.window.location.href='{$url}';");
             exit();
@@ -575,7 +580,9 @@ if (!function_exists('suSlugifyString')) {
 if (!function_exists('suGetExtension')) {
 
     function suGetExtension($name) {
-        return end(explode(".", strtolower($name)));
+        $name = pathinfo($name);
+        $name = $name['extension'];
+        return $name;
     }
 
 }
@@ -583,6 +590,7 @@ if (!function_exists('suGetExtension')) {
 if (!function_exists('suValdationErrors')) {
 
     function suValdationErrors($vError) {
+        $li = '';
         for ($i = 0; $i <= sizeof($vError) - 1; $i++) {
             $li.= '
       <li>' . $vError[$i] . '</li>
@@ -619,45 +627,45 @@ if (!function_exists('suValidateForm')) {
             $validateAsArray = $dbsArray;
         }
         foreach ($_POST as $key => $value) {
-            if ($dbsArray[$key . '_req'] == '*') {
-                if ($validateAsArray[$key . '_validateas'] == 'string') {
+            if (isset($dbsArray[$key . '_req']) && ($dbsArray[$key . '_req'] == '*')) {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'string')) {
                     isString($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'required') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'required')) {
                     isRequired($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'textarea') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'textarea')) {
                     isRequired($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'email') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'email')) {
                     isEmail($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'int') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'int')) {
                     isInt($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'float') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'float')) {
                     isFloat($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'double') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'double')) {
                     isDouble($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'url') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'url')) {
                     isURL($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'ip') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'ip')) {
                     isIP($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'cc') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'cc')) {
                     isCC($_POST[$key], $dbsArray[$key . '_title']);
                 }
 
-                if ($validateAsArray[$key . '_validateas'] == 'date') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'date')) {
                     isDate($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'enum') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'enum')) {
                     isEnum($_POST[$key], $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'password') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'password')) {
                     isRequired($_POST[$key], $dbsArray[$key . '_title']);
                     isRequired($_POST[$key . '2'], 'Confirm ' . $dbsArray[$key . '_title']);
                     isPassword($key, $dbsArray[$key . '_title']);
@@ -665,45 +673,43 @@ if (!function_exists('suValidateForm')) {
             } else {
 
                 if (($_POST[$key] != '') && ($_POST[$key] != '^')) {
-
-                    if ($validateAsArray[$key . '_validateas'] == 'string') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'string')) {
                         isString($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'required') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'required')) {
                         isRequired($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'textarea') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'textarea')) {
                         isRequired($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'email') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'email')) {
                         isEmail($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'int') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'int')) {
                         isInt($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'float') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'float')) {
                         isFloat($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'double') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'double')) {
                         isDouble($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'url') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'url')) {
                         isURL($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'ip') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'ip')) {
                         isIP($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'cc') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'cc')) {
                         isCC($_POST[$key], $dbsArray[$key . '_title']);
                     }
-
-                    if ($validateAsArray[$key . '_validateas'] == 'date') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'date')) {
                         isDate($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'enum') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'enum')) {
                         isEnum($_POST[$key], $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'password') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'password')) {
                         isRequired($_POST[$key], $dbsArray[$key . '_title']);
                         isRequired($_POST[$key . '2'], 'Confirm ' . $dbsArray[$key . '_title']);
                         isPassword($key, $dbsArray[$key . '_title']);
@@ -712,27 +718,26 @@ if (!function_exists('suValidateForm')) {
             }
         }
         foreach ($_FILES as $key => $value) {
-            if ($dbsArray[$key . '_req'] == '*') {
-
-                if ($validateAsArray[$key . '_validateas'] == 'image') {
+            if (isset($dbsArray[$key . '_req']) && ($dbsArray[$key . '_req'] == '*')) {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'image')) {
                     isImage($key, $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'file') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'file')) {
                     isFile($key, $dbsArray[$key . '_title']);
                 }
-                if ($validateAsArray[$key . '_validateas'] == 'attachment') {
+                if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'attachment')) {
                     isAttachment($key, $dbsArray[$key . '_title']);
                 }
             } else {
 
-                if ($_FILES[$key]['name'] != '') {
-                    if ($validateAsArray[$key . '_validateas'] == 'image') {
+                if (isset($_FILES[$key]['name']) && ( $_FILES[$key]['name'] != '')) {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'image')) {
                         isImage($key, $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'file') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'file')) {
                         isFile($key, $dbsArray[$key . '_title']);
                     }
-                    if ($validateAsArray[$key . '_validateas'] == 'attachment') {
+                    if (isset($validateAsArray[$key . '_validateas']) && ($validateAsArray[$key . '_validateas'] == 'attachment')) {
                         isAttachment($key, $dbsArray[$key . '_title']);
                     }
                 }
@@ -838,7 +843,9 @@ if (!function_exists('suMail')) {
         } else {
             $mail = new PHPMailer(); // defaults to using php "mail()"
             $body = $message;
-            $body = eregi_replace("[\]", '', $body);
+            if (function_exists(eregi_replace)) {
+                $body = eregi_replace("[\]", '', $body);
+            }
             $mail->AddReplyTo($fromEmail, $fromName);
             $mail->SetFrom($fromEmail, $fromName);
             $mail->CharSet = 'UTF-8';
@@ -863,6 +870,7 @@ if (!function_exists('suMongoDbToCSV')) {
 
     //$headerArray=array('Col 1','Col 2','Col 3');
     function suMongoDbToCSV($fieldsArray, $headerArray, $outputFileName) {
+        $csvFields = '';
         if (suSegment(1) == 'stream-csv') {
 
             global $allRows;

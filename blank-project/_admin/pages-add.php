@@ -100,7 +100,7 @@ $pageTitle = 'Add Pages';
                                 <!--SU STARTS-->
 
                                 <form class="form-horizontal" action="<?php echo ADMIN_URL; ?>pages-remote.php/add/" accept-charset="utf-8" name="suForm" id="suForm" method="post" target="remote" >
-                                    <link rel="stylesheet" href="<?php echo BASE_URL; ?>sulata/themes/redmond/jquery-ui.css">
+
 
                                     <div class="gallery clearfix">
                                         <div class="form-group">
@@ -246,7 +246,7 @@ $pageTitle = 'Add Pages';
                                                 }
                                                 echo suInput('textarea', $arg, '', TRUE);
                                                 ?>
-                                                <div><a href="javascript:;" onclick="$('#page__Short_Text').toggle();"><i class="fa fa-eye"></i> <sup>Short Text</sup></a></div>
+
                                             </div>
                                         </div>
 

@@ -1,4 +1,4 @@
-<?php if ($_GET['overlay'] != 'yes') { ?>
+<?php if (!isset($_GET['overlay']) || ($_GET['overlay'] != 'yes')) { ?>
     <div class="breads">
         <?php if (($pageName == 'Home') || ($pageTitle == 'Dashboard')) { ?>
             <a href="<?php echo ADMIN_URL; ?>"><i class="fa fa-home lblue"></i> Home</a>

@@ -8,12 +8,12 @@ include('../sulata/includes/db-structure.php');
 checkLogin();
 
 //Validation array
-$validateAsArray = array('testimonial__Name_validateas' => 'required', 'testimonial__Designation_and_Company_validateas' => 'required', 'testimonial__Location_validateas' => 'required','testimonial__Status_validateas' => 'required', 'testimonial__Date_validateas' => 'required',);
+$validateAsArray = array('testimonial__Name_validateas' => 'required', 'testimonial__Designation_and_Company_validateas' => 'required', 'testimonial__Location_validateas' => 'required', 'testimonial__Status_validateas' => 'required', 'testimonial__Date_validateas' => 'required',);
 //---------
 //Check to stop page opening outside iframe
 //Deliberately disabled for list and delete conditions
 $do = suSegment(1);
-if (($_GET["do"] != "check") && ($_GET["do"] != "autocomplete")) {
+if (isset($_GET["do"]) && ($_GET["do"] != "check") && ($_GET["do"] != "autocomplete")) {
     suFrameBuster();
 }
 ?>

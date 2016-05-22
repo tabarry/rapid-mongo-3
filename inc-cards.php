@@ -112,7 +112,7 @@ $cardCode = "
                                         <div class=\"col-xs-5 col-sm-2 col-md-2 col-lg-2\">
                                         <input id=\"Submit\" type=\"submit\" value=\"Search\" name=\"Submit\" class=\"btn btn-primary pull-right\">
                                         </div>
-                                        <?php if(\$_GET['q']){?>
+                                        <?php if (isset(\$_GET['q'])) { ?>
                                         <div class=\"lineSpacer clear\"></div>
                                          <div class=\"pull-right\"><a style=\"text-decoration:underline !important;\" href=\"<?php echo ADMIN_URL;?>" . $_POST['frmFormsetvalue'] . ".php\">Clear search.</a></div>
                                         <?php } ?>
@@ -180,16 +180,16 @@ $csvDownloadCode = "
 \$col = new MongoCollection(\$db, '" . $_POST['table'] . "');
 
 //Search
-if (\$_GET['q'] != '') {
+if (isset(\$_GET['q'])) {
     \$criteria = array('" . $fieldPrefix . "__dbState' => 'Live', '" . $_POST['frmSearch'] . "' => new MongoRegex(\"/\" . \$_GET['q'] . \"/i\"));
 } else {
     \$criteria = array('" . $fieldPrefix . "__dbState' => 'Live');
 }
 //Paginate
-if (!\$_GET['start']) {
+if (!isset(\$_GET['start'])) {
     \$_GET['start'] = 0;
 }
-if (!\$_GET['sr']) {
+if (!isset(\$_GET['sr'])) {
     \$sr = 0;
 } else {
     \$sr = \$_GET['sr'];
@@ -200,15 +200,19 @@ if (!\$_GET['sr']) {
 //Default sort
 \$sortOrder = array('" . $_POST['frmSearch'] . "_slug' => 1);
 //Sort
-if (\$_GET['sort'] != '') {
+if (isset(\$_GET['sort']) && (\$_GET['sort'] != '')) {
     if (\$_GET['sort'] == 'asc') {
-        \$sortOrder = array(\$_GET['f'] => 1);
+        if (isset(\$_GET['f'])) {
+            \$sortOrder = array(\$_GET['f'] => 1);
+        }
     } else {
-        \$sortOrder = array(\$_GET['f'] => -1);
+        if (isset(\$_GET['f'])) {
+            \$sortOrder = array(\$_GET['f'] => -1);
+        }
     }
-    \$row = \$col->find(\$criteria,\$selectedFields)->sort(\$sortOrder)->limit(\$getSettings['page_size'])->skip(\$_GET['start']);
+    \$row = \$col->find(\$criteria, \$selectedFields)->sort(\$sortOrder)->limit(\$getSettings['page_size'])->skip(\$_GET['start']);
 } else {
-    \$row = \$col->find(\$criteria,\$selectedFields)->sort(\$sortOrder)->limit(\$getSettings['page_size'])->skip(\$_GET['start']);
+    \$row = \$col->find(\$criteria, \$selectedFields)->sort(\$sortOrder)->limit(\$getSettings['page_size'])->skip(\$_GET['start']);
 }
 
 \$numDocs = \$col->count(\$criteria,\$selectedFields);

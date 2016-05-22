@@ -14,7 +14,7 @@ $validateAsArray = array('mediafile__Category_validateas' => 'required', 'mediaf
 //Check to stop page opening outside iframe
 //Deliberately disabled for list and delete conditions
 $do = suSegment(1);
-if (($_GET["do"] != "check") && ($_GET["do"] != "autocomplete")) {
+if (isset($_GET["do"]) && ($_GET["do"] != "check") && ($_GET["do"] != "autocomplete")) {
     suFrameBuster();
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-
+$checkIfPost='';
 //Build validation type array
 for ($i = 1; $i <= sizeof($_POST['frmType']) - 1; $i++) {
     if ($_POST['frmType'][$i] == 'Textbox') {
@@ -67,9 +67,12 @@ if ($_POST['frmType'][$i] == 'Autocomplete') {
 for ($i = 0; $i <= sizeof($_POST['frmField']) - 1; $i++) {
     if ($_POST['frmField'][$i] != $_POST['primary']) {
         if (!strstr($_POST['frmType'][$i], 'field')) {
+            
             if ($_POST['frmType'][$i] == 'Date') {
+                $checkIfPost .= "if(!isset(\$_POST['" . $_POST['frmField'][$i] . "'])){\$_POST['" . $_POST['frmField'][$i] . "']='';}";
                 $setInsertSql.="'" . $_POST['frmField'][$i] . "' => new MongoDate(strtotime(suDate2Db(\$_POST['" . $_POST['frmField'][$i] . "']) . ' ' . date('H:i:s'))),";
             } else {
+                $checkIfPost .= "if(!isset(\$_POST['" . $_POST['frmField'][$i] . "'])){\$_POST['" . $_POST['frmField'][$i] . "']='';}";
                 if ($_POST['frmField'][$i] == $_POST['uniqueField']) {
                     $setInsertSql.="'" . $_POST['frmField'][$i] . "' => suStrip(\$_POST['" . $_POST['frmField'][$i] . "']),";
                     $setInsertSql.="'" . $_POST['frmField'][$i] . "_slug' => suSlugifyString(\$_POST['" . $_POST['frmField'][$i] . "']),";
@@ -105,9 +108,11 @@ $validateAs
 //Check to stop page opening outside iframe
 //Deliberately disabled for list and delete conditions
 \$do = suSegment(1);
-if ((\$_GET[\"do\"] != \"check\") && (\$_GET[\"do\"] != \"autocomplete\") " . $autoCompleteFrameBuster . ") {
+if (isset(\$_GET[\"do\"]) && (\$_GET[\"do\"] != \"check\") && (\$_GET[\"do\"] != \"autocomplete\") " . $autoCompleteFrameBuster . ") {
     suFrameBuster();
 }
+//Hand the unset POST variables
+$checkIfPost;
 ?>
 <?php
 

@@ -11,16 +11,16 @@ $pageTitle = 'Manage Testimonials';
 $col = new MongoCollection($db, 'sulata_testimonials');
 
 //Search
-if ($_GET['q'] != '') {
+if (isset($_GET['q'])) {
     $criteria = array('testimonial__dbState' => 'Live', 'testimonial__Name' => new MongoRegex("/" . $_GET['q'] . "/i"));
 } else {
     $criteria = array('testimonial__dbState' => 'Live');
 }
 //Paginate
-if (!$_GET['start']) {
+if (!isset($_GET['start'])) {
     $_GET['start'] = 0;
 }
-if (!$_GET['sr']) {
+if (!isset($_GET['sr'])) {
     $sr = 0;
 } else {
     $sr = $_GET['sr'];
@@ -31,11 +31,15 @@ $selectedFields = array('testimonial__Name' => 1, 'testimonial__Designation_and_
 //Default sort
 $sortOrder = array('testimonial__Designation_and_Company_slug' => 1);
 //Sort
-if ($_GET['sort'] != '') {
+if (isset($_GET['sort']) && ($_GET['sort'] != '')) {
     if ($_GET['sort'] == 'asc') {
-        $sortOrder = array($_GET['f'] => 1);
+        if (isset($_GET['f'])) {
+            $sortOrder = array($_GET['f'] => 1);
+        }
     } else {
-        $sortOrder = array($_GET['f'] => -1);
+        if (isset($_GET['f'])) {
+            $sortOrder = array($_GET['f'] => -1);
+        }
     }
     $row = $col->find($criteria, $selectedFields)->sort($sortOrder)->limit($getSettings['page_size'])->skip($_GET['start']);
 } else {
@@ -162,7 +166,7 @@ if (suSegment(1) == 'stream-pdf' && $downloadAccessPDF == TRUE) {
                                         <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
                                             <input id="Submit" type="submit" value="Search" name="Submit" class="btn btn-primary pull-right">
                                         </div>
-                                        <?php if ($_GET['q']) { ?>
+                                        <?php if (isset($_GET['q'])) { ?>
                                             <div class="lineSpacer clear"></div>
                                             <div class="pull-right"><a style="text-decoration:underline !important;" href="<?php echo ADMIN_URL; ?>testimonials.php">Clear search.</a></div>
                                         <?php } ?>
@@ -175,7 +179,7 @@ if (suSegment(1) == 'stream-pdf' && $downloadAccessPDF == TRUE) {
                                     <div id="table-area"><a href="testimonials-add.php" class="btn btn-black">Add new..</a></div>
                                 <?php } ?>
                                 <?php
-                                $fieldsArray = array('testimonial__Name', 'testimonial__Designation_and_Company_slug', 'testimonial__Location','testimonial__Status','testimonial__Date');
+                                $fieldsArray = array('testimonial__Name', 'testimonial__Designation_and_Company_slug', 'testimonial__Location', 'testimonial__Status', 'testimonial__Date');
                                 suSort($fieldsArray);
                                 ?>
                                 <!-- TABLE -->

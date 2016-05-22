@@ -10,16 +10,16 @@ $pageTitle = 'Manage Users';
 
 $col = new MongoCollection($db, 'sulata_users');
 //Search
-if ($_GET['q'] != '') {
+if (isset($_GET['q'])) {
     $criteria = array('user__dbState' => 'Live', 'user__Email' => new MongoRegex("/" . $_GET['q'] . "/i"));
 } else {
     $criteria = array('user__dbState' => 'Live');
 }
 //Paginate
-if (!$_GET['start']) {
+if (!isset($_GET['start'])) {
     $_GET['start'] = 0;
 }
-if (!$_GET['sr']) {
+if (!isset($_GET['sr'])) {
     $sr = 0;
 } else {
     $sr = $_GET['sr'];
@@ -30,11 +30,15 @@ $selectedFields = array('user__Name' => 1, 'user__Phone' => 1, 'user__Email' => 
 //Default sort
 $sortOrder = array('user__Name_slug' => 1);
 //Sort
-if ($_GET['sort'] != '') {
+if (isset($_GET['sort']) && ($_GET['sort'] != '')) {
     if ($_GET['sort'] == 'asc') {
-        $sortOrder = array($_GET['f'] => 1);
+        if (isset($_GET['f'])) {
+            $sortOrder = array($_GET['f'] => 1);
+        }
     } else {
-        $sortOrder = array($_GET['f'] => -1);
+        if (isset($_GET['f'])) {
+            $sortOrder = array($_GET['f'] => -1);
+        }
     }
     $row = $col->find($criteria, $selectedFields)->sort($sortOrder)->limit($getSettings['page_size'])->skip($_GET['start']);
 } else {
@@ -143,7 +147,7 @@ $numDocs = $col->count($criteria, $selectedFields);
                                         <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
                                             <input id="Submit" type="submit" value="Search" name="Submit" class="btn btn-primary pull-right">
                                         </div>
-                                        <?php if ($_GET['q']) { ?>
+                                        <?php if (isset($_GET['q'])) { ?>
                                             <div class="lineSpacer clear"></div>
                                             <div class="pull-right"><a style="text-decoration:underline !important;" href="<?php echo ADMIN_URL; ?>users-cards.php">Clear search.</a></div>
                                         <?php } ?>
@@ -180,12 +184,16 @@ $numDocs = $col->count($criteria, $selectedFields);
 
                                                     </header>
                                                 <?php } ?>
-                                                <?php if ((file_exists(ADMIN_UPLOAD_PATH . $doc['user__Picture'])) && ($doc['user__Picture'] != '')) { ?>
-                                                    <img  border='0' class="imgBorder" src="<?php echo BASE_URL . 'files/' . $doc['user__Picture']; ?>"/>
-                                                <?php } else { ?>
-                                                    <img  border='0' class="imgBorder" src="<?php echo BASE_URL . 'files/default-user.png'; ?>"/>
-                                                <?php } ?>
-                                                    <div>&nbsp;</div>
+                                                <?php
+                                                if ((isset($doc['user__Picture']) && $doc['user__Picture'] != '') && (file_exists(ADMIN_UPLOAD_PATH . $doc['user__Picture']))) {
+                                                    $userImage = BASE_URL . 'files/' . $doc['user__Picture'];
+                                                } else {
+                                                    $userImage = BASE_URL . 'files/default-user.png';
+                                                }
+                                                ?>
+
+                                                <div class="imgThumb" style="background-image:url(<?php echo $userImage; ?>);"></div>
+                                                <div>&nbsp;</div>
                                                 <label>Name</label>
                                                 <h1><?php
                                                     if (suUnstrip($doc['user__Name']) == '') {

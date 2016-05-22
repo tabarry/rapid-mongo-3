@@ -102,7 +102,7 @@ $addAccess = FALSE;
                                 <!--SU STARTS-->
 
                                 <form class="form-horizontal" action="<?php echo ADMIN_URL; ?>faqs-remote.php/add/" accept-charset="utf-8" name="suForm" id="suForm" method="post" target="remote" >
-                                    <link rel="stylesheet" href="<?php echo BASE_URL; ?>sulata/themes/redmond/jquery-ui.css">
+
 
                                     <div class="gallery clearfix">
                                         <div class="form-group">

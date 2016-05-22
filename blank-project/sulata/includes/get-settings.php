@@ -6,7 +6,7 @@
 //Start session
 session_start();
 
-if ($_SESSION[SESSION_PREFIX . 'getSettings'] == '') {
+    if (!isset($_SESSION[SESSION_PREFIX . 'getSettings']) || ($_SESSION[SESSION_PREFIX . 'getSettings'] == '')) {
     $col = new MongoCollection($db, 'sulata_settings');
     $criteria = array('setting__dbState' => 'Live');
     $row = $col->find($criteria);
@@ -46,4 +46,5 @@ $defaultHeight = '480';
 //Default database ids not to be deleted
 $pageId = 1; //CMS page id
 //Hide labels and show placeholder as default
+$showLabel = FALSE;
 $lblClass = suShowLabels();

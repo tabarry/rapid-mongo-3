@@ -10,6 +10,7 @@ $addCode .="
 <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\">            
                                 <?php
                                 //Label
+                                \$lblClass = suShowLabels(TRUE);
                                 \$label = array('class' => \$lblClass);
                                 echo suInput('label', \$label, \$dbs_" . $_POST['table'] . "['" . $_POST['frmField'][$i] . "_req'] . '" . $_POST['frmLabel'][$i] . ":', TRUE);
                                 //Input
@@ -20,6 +21,7 @@ $addCode .="
                                     \$arg = array_merge(\$placeholder, \$arg);
                                 }    
                                 echo suInput('input', \$arg);
+                                \$lblClass = suShowLabels();
                                 ?>
 </div> 
 </div> 
@@ -30,6 +32,7 @@ $addCode .="
 <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\">
                                 <?php
                                 //Label
+                                \$lblClass = suShowLabels(TRUE);
                                 \$label = array('class' => \$lblClass);
                                 echo suInput('label', \$label, \$dbs_" . $_POST['table'] . "['" . $_POST['frmField'][$i] . "_req'] . '" . $_POST['frmLabel'][$i] . ":', TRUE);
                                 //Input
@@ -40,6 +43,7 @@ $addCode .="
                                     \$arg = array_merge(\$placeholder, \$arg);
                                 }
                                 echo suInput('input', \$arg);
+                                \$lblClass = suShowLabels();
                                 ?>
 </div>
 </div>
@@ -47,13 +51,17 @@ $addCode .="
 }
 if ($doUpdate == TRUE) {
     $addCode .="
-    <?php if(file_exists(ADMIN_UPLOAD_PATH . \$row['" . $_POST['frmField'][$i] . "'])){?>
-    <a href=\"<?php echo BASE_URL.'files/'.\$row['" . $_POST['frmField'][$i] . "'] ;?>\" target=\"_blank\" class=\"underline\"><?php echo VIEW_FILE;?></a>
-    <?php } ?>    
+     <?php 
+    if (!isset(\$row['" . $_POST['frmField'][$i] . "'])) {
+        \$row['" . $_POST['frmField'][$i] . "'] = '';
+    }
+    if ((isset(\$row['" . $_POST['frmField'][$i] . "']) && \$row['" . $_POST['frmField'][$i] . "'] != '') && (file_exists(ADMIN_UPLOAD_PATH . \$row['" . $_POST['frmField'][$i] . "']))) { 
+    ?>  
     ";
 }
 $addCode .="
 <div><?php echo \$getSettings['allowed_file_formats']; ?></div>
+<p>&nbsp;</p>
     
 ";
 
@@ -75,7 +83,9 @@ $extraSqlx2 = "
         \$extraSql['" . $_POST['frmField'][$i] . "'] = \$uploadPath . \$" . $_POST['frmField'][$i] . ";
 
     }else{
-            \$extraSql['" . $_POST['frmField'][$i] . "'] = \$_POST['previous_" . $_POST['frmField'][$i] . "'];
+            if (isset(\$_POST['" . $_POST['frmField'][$i] . "']) && (\$_POST['" . $_POST['frmField'][$i] . "'] != '')) {
+                \$extraSql['" . $_POST['frmField'][$i] . "'] = \$_POST['previous_" . $_POST['frmField'][$i] . "'];
+            }
     }    
 ";
 $uploadCheck.="

@@ -1,4 +1,4 @@
-<?php if ($_GET['overlay'] != 'yes') { ?>
+<?php if (!isset($_GET['overlay']) || ($_GET['overlay'] != 'yes')) { ?>
     <div class="sidebar">
 
         <div class="sidey">
@@ -22,7 +22,7 @@
                             <li><a href="<?php echo ADMIN_URL; ?>notes.php" class="btn sideLink"><i class="fa fa-pencil"></i> Free Notes</a></li>
 
 
-                            <li><a href="<?php echo ADMIN_URL; ?>settings<?php echo $tableCardLink;?>.php" class="btn sideLink"><i class="fa fa-cogs"></i> Settings</a></li>
+                            <li><a href="<?php echo ADMIN_URL; ?>settings<?php echo $tableCardLink; ?>.php" class="btn sideLink"><i class="fa fa-cogs"></i> Settings</a></li>
                             <li><a href="<?php echo ADMIN_URL; ?>themes.php" class="btn sideLink"><i class="fa fa-photo"></i> Themes</a></li>
                             <li><a href="<?php echo ADMIN_URL; ?>users-update.php" class="btn sideLink"><i class="fa fa-user"></i> Update Profile</a></li>
                             <li><a href="<?php echo ADMIN_URL; ?>login.php?do=logout" target="remote" class="btn sideLinkReverse"><i class="fa fa-power-off"></i> Log Out</a></li>   
