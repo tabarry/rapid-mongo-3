@@ -96,4 +96,23 @@ if (isset(\$_GET['do']) && (\$_GET['do'] == 'autocomplete" . $autoCompleteCount 
     flush();
 }
 ";
+$remoteValueExistsCheck .="
+    //Check if autocomplete value exists in the DB
+    \$col = new MongoCollection(\$db, '".$table."');
+    \$numDocs = 0;
+    try {
+        \$criteria = array('".$fieldText."' => \$_POST['" . $_POST['frmField'][$i] . "'], '".$fieldPrefix1."__dbState' => 'Live');
+        \$row = \$col->findOne(\$criteria);
+    } catch (MongoException \$e) {
+        if (\$e->getCode() > 0) {
+            \$vError[] = MONGODB_ERROR;
+        }
+    }
+//Number of documents
+    \$numDocs = \$col->count(\$criteria);
+    if (\$numDocs < 1) {
+        \$vError[] = \"Incorrect value selected.\";
+    }
+    ///==
+";    
 ?>

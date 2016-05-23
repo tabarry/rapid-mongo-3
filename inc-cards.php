@@ -30,7 +30,7 @@ for ($i = 0; $i <= sizeof($_POST['frmShow']) - 1; $i++) {
             $fieldsToShow .= "<label>" . makeFieldLabel($_POST['frmShow'][$i]) . "</label>\n
                               <{$tag}>
                               <?php
-                                if (suUnstrip(\$doc['" . $_POST['frmShow'][$i] . "']) == '') {
+                                if (!isset(\$doc['" . $_POST['frmShow'][$i] . "']) || (\$doc['" . $_POST['frmShow'][$i] . "'] == '')) {
                                     echo \"-\";
                                 } else {
                                     {$suSubstr}
@@ -48,7 +48,7 @@ for ($i = 0; $i <= sizeof($_POST['frmShow']) - 1; $i++) {
             $fieldsToShow .= "<label>" . makeFieldLabel($_POST['frmShow'][$i]) . "</label>\n
                               <{$tag}>
                               <?php
-                                if (suUnstrip(\$doc['" . $_POST['frmShow'][$i] . "']) == '') {
+                                if (!isset(\$doc['" . $_POST['frmShow'][$i] . "']) || (\$doc['" . $_POST['frmShow'][$i] . "'] == '')) {
                                     echo \"-\";
                                 } else {
                                     {$suSubstr}

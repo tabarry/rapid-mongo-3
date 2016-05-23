@@ -35,6 +35,8 @@ define('INACTIVE_MESSAGE', 'Sorry, your access have been disabled. Please contac
 define('NOTES_UPDATE_MESSAGE', 'Notes updated successfully.');
 define('MULTIPLE_LOGIN_ERROR_MESSAGE', 'You have logged in from another IP address, hence this session has been logged out.');
 define('WEAK_PASSWORD', 'Your password is too weak.');
+define('INCORRECT_AUTO_COMPLETE_VALUE', 'Incorrect value for %s, please select a value from the suggestions.');
+
 
 /** Google Plus * */
 define('GOOGLE_CANCELLED', 'Authentication cancelled.');

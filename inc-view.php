@@ -13,7 +13,9 @@ $linksPlace = "";
 
 for ($i = 0; $i <= sizeof($_POST['frmShow']) - 1; $i++) {
     if (strstr($_POST['frmShow'][$i], '_Date')) {
+        
     } else {
+        
     }
     $colSize = $colSize + 1;
 }
@@ -28,16 +30,16 @@ for ($i = 0; $i <= sizeof($_POST['frmShow']) - 1; $i++) {
         if (strstr($_POST['frmShow'][$i], '_Date')) {
             $fieldsToShow .= "<th style=\"width:" . $colSize . "%\">" . makeFieldLabel($_POST['frmShow'][$i]) . "</th>\n";
             $fieldsToLoop .= "\$" . $_POST['frmShow'][$i] . "[\$key] = \$value['" . $_POST['frmShow'][$i] . "'];\n";
-            
+
             $colData .= "<td><?php echo date('F d, Y', \$doc['" . $_POST['frmShow'][$i] . "']->sec);?></td>\n";
         } else {
             $fieldsToShow .= "<th style=\"width:" . $colSize . "%\">" . makeFieldLabel($_POST['frmShow'][$i]) . "</th>\n";
             $fieldsToLoop .= "\$" . $_POST['frmShow'][$i] . "[\$key] = \$value['" . $_POST['frmShow'][$i] . "'];\n";
-           
-            $colData .= "<td><?php echo suUnstrip(\$doc['" . $_POST['frmShow'][$i] . "']);?></td>\n";
+
+            $colData .= "<td><?php if (isset(\$doc['" . $_POST['frmShow'][$i] . "']) && (\$doc['" . $_POST['frmShow'][$i] . "'] != '')) { echo suUnstrip(\$doc['" . $_POST['frmShow'][$i] . "']);}?></td>\n";
         }
         if (!stristr($_POST['frmShow'][$i], '__ID')) {
-             if($_POST['frmShow'][$i]==$_POST['frmSearch']) {
+            if ($_POST['frmShow'][$i] == $_POST['frmSearch']) {
                 $fieldsArray.="'" . $_POST['frmShow'][$i] . "_slug',";
             } else {
                 $fieldsArray.="'" . $_POST['frmShow'][$i] . "',";
@@ -52,7 +54,7 @@ for ($i = 0; $i <= sizeof($_POST['frmShow']) - 1; $i++) {
 
     if (strstr($_POST['frmShow'][$i], '_Date')) {
         $fieldsToShowRemote .= $_POST['frmShow'][$i] . ",";
-        
+
         if (!stristr($_POST['frmShow'][$i], '__ID')) {
             $fieldsToShowRemote .= $_POST['frmShow'][$i] . ",";
 

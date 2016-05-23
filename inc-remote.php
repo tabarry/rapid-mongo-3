@@ -111,7 +111,7 @@ $validateAs
 if (isset(\$_GET[\"do\"]) && (\$_GET[\"do\"] != \"check\") && (\$_GET[\"do\"] != \"autocomplete\") " . $autoCompleteFrameBuster . ") {
     suFrameBuster();
 }
-//Hand the unset POST variables
+//Handle the unset POST variables
 $checkIfPost;
 ?>
 <?php
@@ -130,6 +130,8 @@ if (\$do == \"add\") {
     suProcessForm(\$dbs_" . $_POST['table'] . ",\$validateAsArray);
 " . $validateAddRemote . "
         
+{$remoteValueExistsCheck}
+    
 //Print validation errors on parent
     suValdationErrors(\$vError);
 
@@ -193,7 +195,10 @@ if (\$do == \"update\") {
     $resetUploadValidation
         
     suProcessForm(\$dbs_" . $_POST['table'] . ",\$validateAsArray);
-" . $validateAddRemote . " 
+" . $validateAddRemote . "
+    
+{$remoteValueExistsCheck}
+    
     //Reset optional
 
 

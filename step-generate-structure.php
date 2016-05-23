@@ -26,7 +26,7 @@ while ($row = suFetch($rs)) {
             $colName = $row[0];
             $db->createCollection($colName);
             $u = array($row2[0] => 1);
-            $db->$colName->createIndex($u,array('unique' => true));
+            $db->$colName->createIndex($u, array('unique' => true));
             //====
         }
         $arr2 = '';
@@ -70,6 +70,45 @@ while ($row = suFetch($rs)) {
                 $html5_required = '';
             }
         }
+        if (stristr($row2[0], 'URL')) {
+
+            if ($row2[3] == 'NO') {
+                $req = "*";
+                $js_required = 'required';
+                $html5_required = 'required';
+                $html5_type = 'text';
+            } else {
+                $req = "";
+                $js_required = '';
+                $html5_required = '';
+            }
+        }
+        if (stristr($row2[0], 'CC')) {
+
+            if ($row2[3] == 'NO') {
+                $req = "*";
+                $js_required = 'required';
+                $html5_required = 'required';
+                $html5_type = 'text';
+            } else {
+                $req = "";
+                $js_required = '';
+                $html5_required = '';
+            }
+        }
+        if (stristr($row2[0], 'IP')) {
+
+            if ($row2[3] == 'NO') {
+                $req = "*";
+                $js_required = 'required';
+                $html5_required = 'required';
+                $html5_type = 'text';
+            } else {
+                $req = "";
+                $js_required = '';
+                $html5_required = '';
+            }
+        }
 
         if (stristr($row2[1], 'int(')) {
             $js_required = "int";
@@ -101,6 +140,19 @@ while ($row = suFetch($rs)) {
         if (stristr($row2[0], 'Password')) {
             $js_required = "password";
             $html5_type = 'password';
+        }
+        
+        if (stristr($row2[0], 'URL')) {
+            $js_required = "required";
+            $html5_type = 'text';
+        }
+        if (stristr($row2[0], 'IP')) {
+            $js_required = "required";
+            $html5_type = 'text';
+        }
+        if (stristr($row2[0], 'CC')) {
+            $js_required = "required";
+            $html5_type = 'text';
         }
 
         $max = explode('(', $row2[1]);

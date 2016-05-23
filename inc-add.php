@@ -13,7 +13,6 @@ for ($i = 0; $i <= sizeof($_POST['frmField']) - 1; $i++) {
     if ($_POST['frmType'][$i] == 'Textbox') {
         include('inc-add-textbox.php');
     } elseif ($_POST['frmType'][$i] == 'URL') {
-            echo "<script>alert('" . $_POST['frmType'][$i] . "')</script>";
         include('inc-add-textbox.php');
     } elseif ($_POST['frmType'][$i] == 'IP') {
         include('inc-add-textbox.php');
@@ -47,8 +46,6 @@ for ($i = 0; $i <= sizeof($_POST['frmField']) - 1; $i++) {
         include('inc-add-dbdropdownbox.php');
     } elseif ($_POST['frmType'][$i] == 'Autocomplete') {
         include('inc-add-autocompletebox.php');
-    } else {
-        include('inc-add-textbox.php');
     }
 }
 

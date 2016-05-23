@@ -1,4 +1,5 @@
 <?php
+            
 
 if ($doUpdate == TRUE) {
     $updateValue = " , 'value'=>suUnstrip(\$row['" . $_POST['frmField'][$i] . "'])";
@@ -56,7 +57,9 @@ if ($doUpdate == TRUE) {
         \$row['" . $_POST['frmField'][$i] . "'] = '';
     }
     if ((isset(\$row['" . $_POST['frmField'][$i] . "']) && \$row['" . $_POST['frmField'][$i] . "'] != '') && (file_exists(ADMIN_UPLOAD_PATH . \$row['" . $_POST['frmField'][$i] . "']))) { 
-    ?>  
+    ?>
+    <a href=\"<?php echo BASE_URL.'files/'.\$row['" . $_POST['frmField'][$i] . "'] ;?>\" target=\"_blank\" class=\"underline\"><?php echo VIEW_FILE;?></a>
+    <?php } ?>
     ";
 }
 $addCode .="

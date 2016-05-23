@@ -92,12 +92,6 @@ function makeFieldType($comments, $fld_name, $fld_type, $ddValue) {
                 $sel = "Picture field";
             } elseif (stristr($fld_name, "password")) {
                 $sel = "Password";
-            } elseif (stristr($fld_name, "URL")) {
-                $sel = "URL";
-            } elseif (stristr($fld_name, "CC")) {
-                $sel = "Credit Card";
-            } elseif (stristr($fld_name, "IP")) {
-                $sel = "IP";
             } else {
                 $sel = "Textbox";
             }
@@ -203,7 +197,7 @@ function suWrite($path, $content) {
     }
     if (file_exists($filename) == true) {
         $pageName = preg_replace("/.*\/\w+\//", "", $filename);
-        //@copy($filename, $backupPath . date('Y-m-d-H-i-s') . "-backup." . $pageName);
+        @copy($filename, $backupPath . date('Y-m-d-H-i-s') . "-backup." . $pageName);
     }
 
     @unlink($filename);
