@@ -130,7 +130,7 @@ if (\$do == \"add\") {
     suProcessForm(\$dbs_" . $_POST['table'] . ",\$validateAsArray);
 " . $validateAddRemote . "
         
-{$remoteValueExistsCheck}
+{$remoteValueExistsCheckAdd}
     
 //Print validation errors on parent
     suValdationErrors(\$vError);
@@ -197,7 +197,7 @@ if (\$do == \"update\") {
     suProcessForm(\$dbs_" . $_POST['table'] . ",\$validateAsArray);
 " . $validateAddRemote . "
     
-{$remoteValueExistsCheck}
+{$remoteValueExistsCheckUpdate}
     
     //Reset optional
 

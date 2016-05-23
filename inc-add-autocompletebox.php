@@ -46,7 +46,7 @@ $addCode .="
                                 \$label = array('class' => \$lblClass);
                                 echo suInput('label', \$label, \$dbs_" . $_POST['table'] . "['" . $_POST['frmField'][$i] . "_req'] . '" . $_POST['frmLabel'][$i] . ":', TRUE);
                                 //Input                    
-                                \$arg = array('type' => \$dbs_" . $table . "['" . $fieldText . "_html5_type'] " . $updateValue . ", 'name' => '" . $_POST['frmField'][$i] . "', 'id' => '" . $_POST['frmField'][$i] . "', 'autocomplete' => 'off', 'maxlength' =>  $doMaxLength "  . ",\$dbs_" . $table . "['" . $fieldText . "_html5_req'] => \$dbs_" . $table . "['" . $fieldText . "_html5_req'],'class'=>'form-control');
+                                \$arg = array('type' => \$dbs_" . $table . "['" . $fieldText . "_html5_type'] " . $updateValue . ", 'name' => '" . $_POST['frmField'][$i] . "', 'id' => '" . $_POST['frmField'][$i] . "', 'autocomplete' => 'off', 'maxlength' =>  $doMaxLength " . ",\$dbs_" . $table . "['" . $fieldText . "_html5_req'] => \$dbs_" . $table . "['" . $fieldText . "_html5_req'],'class'=>'form-control');
                                 //Placeholder
                                 if (\$showLabel == FALSE) {
                                     \$placeholder = array('placeholder' => '" . $_POST['frmLabel'][$i] . "');
@@ -74,10 +74,10 @@ $remoteCodeAutoComplete .= "
 if (isset(\$_GET['do']) && (\$_GET['do'] == 'autocomplete" . $autoCompleteCount . "')) {
 
 
-    \$col = new MongoCollection(\$db, '".$table."');
-    \$sort = array('".$fieldText."' => 1); 
-    \$fields = array('".$fieldText."' => 1); 
-    \$criteria = array('".$fieldPrefix1."__dbState' => 'Live', '".$fieldText."' => new MongoRegex(\"/\" . suUnstrip(\$_REQUEST['term']) . \"/i\"));
+    \$col = new MongoCollection(\$db, '" . $table . "');
+    \$sort = array('" . $fieldText . "' => 1); 
+    \$fields = array('" . $fieldText . "' => 1); 
+    \$criteria = array('" . $fieldPrefix1 . "__dbState' => 'Live', '" . $fieldText . "' => new MongoRegex(\"/\" . suUnstrip(\$_REQUEST['term']) . \"/i\"));
     \$numDocs = \$col->count(\$criteria);
     \$row = \$col->find(\$criteria)->sort(\$sort);
         
@@ -86,8 +86,8 @@ if (isset(\$_GET['do']) && (\$_GET['do'] == 'autocomplete" . $autoCompleteCount 
     if (\$numDocs > 0) {
         foreach (\$row as \$doc) {
             \$data[] = array(
-                'label' => \$doc['".$fieldText."'],
-                'value' => \$doc['".$fieldText."']
+                'label' => \$doc['" . $fieldText . "'],
+                'value' => \$doc['" . $fieldText . "']
             );
         }
     }
@@ -96,12 +96,12 @@ if (isset(\$_GET['do']) && (\$_GET['do'] == 'autocomplete" . $autoCompleteCount 
     flush();
 }
 ";
-$remoteValueExistsCheck .="
-    //Check if autocomplete value exists in the DB
-    \$col = new MongoCollection(\$db, '".$table."');
+$remoteValueExistsCheckAdd .="
+    //Check if autocomplete value exists in the collection
+    \$col = new MongoCollection(\$db, '" . $table . "');
     \$numDocs = 0;
     try {
-        \$criteria = array('".$fieldText."' => \$_POST['" . $_POST['frmField'][$i] . "'], '".$fieldPrefix1."__dbState' => 'Live');
+        \$criteria = array('" . $fieldText . "' => \$_POST['" . $_POST['frmField'][$i] . "'], '" . $fieldPrefix1 . "__dbState' => 'Live');
         \$row = \$col->findOne(\$criteria);
     } catch (MongoException \$e) {
         if (\$e->getCode() > 0) {
@@ -111,8 +111,28 @@ $remoteValueExistsCheck .="
 //Number of documents
     \$numDocs = \$col->count(\$criteria);
     if (\$numDocs < 1) {
-        \$vError[] = \"Incorrect value selected.\";
+        \$vError[] = sprintf(INCORRECT_AUTO_COMPLETE_VALUE,'" . $_POST['frmLabel'][$i] . "');
     }
     ///==
-";    
+";
+
+$remoteValueExistsCheckUpdate .="
+    //Check if autocomplete value exists in the collection
+    \$col = new MongoCollection(\$db, '" . $table . "');
+    \$numDocs = 0;
+    try {
+        \$criteria = array('" . $fieldText . "' => \$_POST['" . $_POST['frmField'][$i] . "'], '" . $fieldPrefix1 . "__dbState' => 'Live');
+        \$row = \$col->findOne(\$criteria);
+    } catch (MongoException \$e) {
+        if (\$e->getCode() > 0) {
+            \$vError[] = MONGODB_ERROR;
+        }
+    }
+//Number of documents
+    \$numDocs = \$col->count(\$criteria);
+    if (\$numDocs < 1) {
+        \$vError[] = sprintf(INCORRECT_AUTO_COMPLETE_VALUE,'" . $_POST['frmLabel'][$i] . "');
+    }
+    ///==
+";
 ?>

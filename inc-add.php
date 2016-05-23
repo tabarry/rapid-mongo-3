@@ -4,7 +4,8 @@ $autoCompleteCount = "";
 $remoteCodeAutoInsert = "";
 $remoteCodeAutoComplete = "";
 $linksPlace = "";
-
+$remoteValueExistsCheckAdd = "";
+$remoteValueExistsCheckUpdate = "";
 //Add section starts
 $addPath = $appPath . $_POST['frmSubFolder'] . '/' . $_POST['frmFormsetvalue'] . '-add.php';
 
@@ -45,6 +46,7 @@ for ($i = 0; $i <= sizeof($_POST['frmField']) - 1; $i++) {
     } elseif ($_POST['frmType'][$i] == 'Dropdown from DB') {
         include('inc-add-dbdropdownbox.php');
     } elseif ($_POST['frmType'][$i] == 'Autocomplete') {
+        
         include('inc-add-autocompletebox.php');
     }
 }

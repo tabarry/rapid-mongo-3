@@ -17,6 +17,7 @@ if (!is_dir($sitePath)) {
 //Get template
 $template1 = file_get_contents('template/template.php');
 $template=  str_replace("#VIEW_PAGE#", "<?php echo ADMIN_URL;?>".$_POST['frmFormsetvalue'], $template1);
+
 //Add section
 $uploadCheck = '';
 include('inc-add.php');
