@@ -193,6 +193,7 @@ function suWrite($path, $content) {
     global $date_time;
 
     if (!is_dir($backupPath)) {
+        $backupPath;
         mkdir($backupPath);
     }
     if (file_exists($filename) == true) {

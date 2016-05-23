@@ -1,12 +1,15 @@
 <?php
 
+//ini_set('display_errors',1);
 define('VERSION', '3');
 $version = "Rapid Mongo " . VERSION; //If this is changed, please also change config.php in sulata/includes folder
 $debug = TRUE;
-if(isset($_POST['folder'])) {
+if (isset($_POST['folder'])) {
     $sitePath = '../' . $_POST['folder'] . '/sulata/';
     $appPath = '../' . $_POST['folder'] . '/';
     $backupPath = '../' . $_POST['folder'] . '/backup/';
+} else {
+    $backupPath = "../backup/";
 }
 
 /* --COMMON SETTINGS */
