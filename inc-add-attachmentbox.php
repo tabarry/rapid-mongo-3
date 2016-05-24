@@ -10,7 +10,8 @@ $addCode .="
     
                                 <?php
                                 //Label
-                                \$lblClass = suShowLabels(TRUE);
+                                \$showLabel = TRUE;
+                                \$lblClass = suShowLabels(\$showLabel);
                                 \$label = array('class' => \$lblClass);
                                 echo suInput('label', \$label, \$dbs_" . $_POST['table'] . "['" . $_POST['frmField'][$i] . "_req'] . '" . $_POST['frmLabel'][$i] . ":', TRUE);
                                 //Input

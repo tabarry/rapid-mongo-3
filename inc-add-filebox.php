@@ -11,7 +11,8 @@ $addCode .="
 <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\">            
                                 <?php
                                 //Label
-                                \$lblClass = suShowLabels(TRUE);
+                                \$showLabel = TRUE;
+                                \$lblClass = suShowLabels(\$showLabel);
                                 \$label = array('class' => \$lblClass);
                                 echo suInput('label', \$label, \$dbs_" . $_POST['table'] . "['" . $_POST['frmField'][$i] . "_req'] . '" . $_POST['frmLabel'][$i] . ":', TRUE);
                                 //Input
@@ -33,7 +34,8 @@ $addCode .="
 <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\">
                                 <?php
                                 //Label
-                                \$lblClass = suShowLabels(TRUE);
+                                \$showLabel = TRUE;
+                                \$lblClass = suShowLabels(\$showLabel);
                                 \$label = array('class' => \$lblClass);
                                 echo suInput('label', \$label, \$dbs_" . $_POST['table'] . "['" . $_POST['frmField'][$i] . "_req'] . '" . $_POST['frmLabel'][$i] . ":', TRUE);
                                 //Input
