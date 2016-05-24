@@ -5,7 +5,7 @@
             <i class="fa fa-user"></i>  -->
             <?php
             if ((isset($_SESSION[SESSION_PREFIX . 'user__Picture']) && $_SESSION[SESSION_PREFIX . 'user__Picture'] != '') && (file_exists(ADMIN_UPLOAD_PATH . $_SESSION[SESSION_PREFIX . 'user__Picture']))) {
-                $userImage = BASE_URL . 'files/' . $row['user__Picture'];
+                $userImage = BASE_URL . 'files/' . $_SESSION[SESSION_PREFIX . 'user__Picture'];
             } else {
                 $userImage = BASE_URL . 'files/default-user.png';
             }

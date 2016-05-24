@@ -84,7 +84,7 @@ if ($_POST['sulata_pages'] == 'drop') {
     unlink('../' . $_POST['directory'] . '/_admin/headers-cards.php');
 }
 if ($_POST['sulata_testimonials'] == 'drop') {
-    echo $sql = "DROP TABLE IF EXISTS sulata_testimonials";
+    $sql = "DROP TABLE IF EXISTS sulata_testimonials";
     suQuery($sql) or die(suError());
     unlink('../' . $_POST['directory'] . '/_admin/testimonials.php');
     unlink('../' . $_POST['directory'] . '/_admin/testimonials-add.php');
