@@ -39,7 +39,7 @@ if ($_POST['frmDetailsSourceText'] != 'Checkbox Text..') {
     $addCheckBox = " 
  <div class=\"clearfix\">&nbsp;</div>    
 <hr/>   
-<h4><i class=\"fa fa-check-square-o\"></i> Select " . strtoupper(str_replace('-', ' ', explodeExtract($t1, "_", 0))) . "</h4>   
+<h4><i class=\"fa fa-check-square-o\"></i> Select " . ucwords(str_replace('_',' ',str_replace('-', ' ', explodeExtract($t1, "_", 0)))) . "</h4>   
 
 <?php if (\$addAccess == 'true') { ?>
 <div>
@@ -82,7 +82,7 @@ foreach (\$chkRows as \$chkDoc) {
 //Update code
     $updateCheckBox = "
 <hr/>   
-<h4><i class=\"fa fa-check-square-o\"></i> Select " . strtoupper(str_replace('-', ' ', explodeExtract($t1, "_", 0))) . "</h4>   
+<h4><i class=\"fa fa-check-square-o\"></i> Select " . ucwords(str_replace('_',' ',str_replace('-', ' ', explodeExtract($t1, "_", 0)))) . "</h4>  
 <?php if (\$addAccess == 'true') { ?>    
 <div>
     <a title=\"Add new record..\" rel=\"prettyPhoto[iframes]\" href=\"<?php echo ADMIN_URL; ?>" . $newPage . "-add.php?overlay=yes&iframe=true&width=100%&height=100%\"><img border='0' src='<?php echo BASE_URL; ?>sulata/images/add-icon.png'/></a> 

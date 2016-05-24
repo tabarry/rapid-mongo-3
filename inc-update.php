@@ -107,7 +107,6 @@ if (\$numDocs == 0) {
 ";
 $updateCodeStart = '
         <form class="form-horizontal" action="<?php echo ADMIN_URL; ?>' . $_POST['frmFormsetvalue'] . '-remote.php/update/" accept-charset="utf-8" name="suForm" id="suForm" method="post" target="remote" ' . $multipart . '>
-            <link rel="stylesheet" href="<?php echo BASE_URL;?>sulata/themes/redmond/jquery-ui.css">
 
             <div class="gallery clearfix">';
 

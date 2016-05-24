@@ -24,8 +24,7 @@ if ($doUpdate == TRUE) {
 
     $updateFieldValue = "
         
-        //Get the field value
-        //\$row['" . $_POST['frmField'][$i] . "'] = \$rowVal['" . $fieldText . "'];
+        
        ";
 } else {
     $autoCompleteFrameBuster .= ' && ($_GET["do"] != "autocomplete' . $autoCompleteCount . '") ';
