@@ -85,8 +85,8 @@ if (isset(\$_GET['do']) && (\$_GET['do'] == 'autocomplete" . $autoCompleteCount 
     if (\$numDocs > 0) {
         foreach (\$row as \$doc) {
             \$data[] = array(
-                'label' => \$doc['" . $fieldText . "'],
-                'value' => \$doc['" . $fieldText . "']
+                'label' => suUnstrip(\$doc['" . $fieldText . "']),
+                'value' => suUnstrip(\$doc['" . $fieldText . "'])
             );
         }
     }

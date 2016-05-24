@@ -112,7 +112,7 @@ if (isset(\$_GET[\"do\"]) && (\$_GET[\"do\"] != \"check\") && (\$_GET[\"do\"] !=
     suFrameBuster();
 }
 //Handle the unset POST variables
-$checkIfPost;
+$checkIfPost
 ?>
 <?php
 
