@@ -98,7 +98,7 @@ if ($do == "update") {
     $extraSql = array();
 
     $col = $db->sulata_settings;
-    $data = array('setting__Setting' => suStrip($_POST['setting__Setting']), 'setting__Key' => suStrip($_POST['setting__Key']), 'setting__Key_slug' => suSlugifyString($_POST['setting__Key']), 'setting__Value' => suStrip($_POST['setting__Value']), 'setting__Type' => suStrip($_POST['setting__Type']), 'setting__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'setting__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'setting__dbState' => 'Live');
+    $data = array('$set' => array('setting__Setting' => suStrip($_POST['setting__Setting']), 'setting__Key' => suStrip($_POST['setting__Key']), 'setting__Key_slug' => suSlugifyString($_POST['setting__Key']), 'setting__Value' => suStrip($_POST['setting__Value']), 'setting__Type' => suStrip($_POST['setting__Type']), 'setting__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'setting__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'setting__dbState' => 'Live'));
     $data = array_merge($data, $extraSql);
 
     $mongoID = new MongoID($_POST['_id']);

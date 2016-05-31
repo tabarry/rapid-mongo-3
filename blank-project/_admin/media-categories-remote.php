@@ -124,7 +124,7 @@ if ($do == "update") {
     }
 
     $col = $db->sulata_media_categories;
-    $data = array('mediacat__Name' => suStrip($_POST['mediacat__Name']), 'mediacat__Name_slug' => suSlugifyString($_POST['mediacat__Name']), 'mediacat__Description' => suStrip($_POST['mediacat__Description']), 'mediacat__Thumbnail_Width' => suStrip($_POST['mediacat__Thumbnail_Width']), 'mediacat__Thumbnail_Height' => suStrip($_POST['mediacat__Thumbnail_Height']), 'mediacat__Image_Width' => suStrip($_POST['mediacat__Image_Width']), 'mediacat__Image_Height' => suStrip($_POST['mediacat__Image_Height']), 'mediacat__Sequence' => suStrip($_POST['mediacat__Sequence']), 'mediacat__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'mediacat__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'mediacat__dbState' => 'Live');
+    $data = array('$set' => array('mediacat__Name' => suStrip($_POST['mediacat__Name']), 'mediacat__Name_slug' => suSlugifyString($_POST['mediacat__Name']), 'mediacat__Description' => suStrip($_POST['mediacat__Description']), 'mediacat__Thumbnail_Width' => suStrip($_POST['mediacat__Thumbnail_Width']), 'mediacat__Thumbnail_Height' => suStrip($_POST['mediacat__Thumbnail_Height']), 'mediacat__Image_Width' => suStrip($_POST['mediacat__Image_Width']), 'mediacat__Image_Height' => suStrip($_POST['mediacat__Image_Height']), 'mediacat__Sequence' => suStrip($_POST['mediacat__Sequence']), 'mediacat__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'mediacat__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'mediacat__dbState' => 'Live'));
     $data = array_merge($data, $extraSql);
 
     $mongoID = new MongoID($_POST['_id']);

@@ -124,7 +124,7 @@ if ($do == "update") {
     }
 
     $col = $db->sulata_headers;
-    $data = array('header__Title' => suStrip($_POST['header__Title']), 'header__Title_slug' => suSlugifyString($_POST['header__Title']), 'header__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'header__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'header__dbState' => 'Live');
+    $data = array('$set' => array('header__Title' => suStrip($_POST['header__Title']), 'header__Title_slug' => suSlugifyString($_POST['header__Title']), 'header__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'header__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'header__dbState' => 'Live'));
     $data = array_merge($data, $extraSql);
 
     $mongoID = new MongoID($_POST['_id']);

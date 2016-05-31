@@ -156,7 +156,7 @@ if ($do == "update") {
 
     $col = $db->sulata_users;
 
-    $data = array('user__Name' => suStrip($_POST['user__Name']), 'user__Phone' => suStrip($_POST['user__Phone']), 'user__Email' => suStrip($_POST['user__Email']), 'user__Email_slug' => suSlugifyString($_POST['user__Email']), 'user__Password' => suCrypt(suStrip($_POST['user__Password'])), 'user__Status' => suStrip($_POST['user__Status']), 'user__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'user__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'user__dbState' => 'Live');
+    $data = array('$set' => array('user__Name' => suStrip($_POST['user__Name']), 'user__Phone' => suStrip($_POST['user__Phone']), 'user__Email' => suStrip($_POST['user__Email']), 'user__Email_slug' => suSlugifyString($_POST['user__Email']), 'user__Password' => suCrypt(suStrip($_POST['user__Password'])), 'user__Status' => suStrip($_POST['user__Status']), 'user__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'user__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'user__dbState' => 'Live'));
     $data = array_merge($data, $extraSql);
 
 

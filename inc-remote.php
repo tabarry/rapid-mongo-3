@@ -208,7 +208,7 @@ if (\$do == \"update\") {
 \$extraSql = array();
 " . $extraSqlx1 . $extraSqlx2 . $extraSqlx3 . "
     \$col = \$db->" . $_POST['table'] . ";
-    \$data = array(" . $setInsertSql . ");
+    \$data = array('\$set' => array(" . $setInsertSql . "));
     \$data = array_merge(\$data,\$extraSql);
 
     \$mongoID = new MongoID(\$_POST['_id']);

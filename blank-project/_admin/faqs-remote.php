@@ -93,7 +93,7 @@ if ($do == "update") {
     suValdationErrors($vError);
 //update record
     $col = $db->sulata_faqs;
-    $data = array('faq__Question' => suStrip($_POST['faq__Question']), 'faq__Question_slug' => suSlugifyString($_POST['faq__Question']), 'faq__Answer' => suStrip($_POST['faq__Answer']), 'faq__Sequence' => suStrip($_POST['faq__Sequence']), 'faq__Status' => suStrip($_POST['faq__Status']), 'faq__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'faq__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'faq__dbState' => 'Live');
+    $data = array('$set' => array('faq__Question' => suStrip($_POST['faq__Question']), 'faq__Question_slug' => suSlugifyString($_POST['faq__Question']), 'faq__Answer' => suStrip($_POST['faq__Answer']), 'faq__Sequence' => suStrip($_POST['faq__Sequence']), 'faq__Status' => suStrip($_POST['faq__Status']), 'faq__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'faq__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'faq__dbState' => 'Live'));
 
 
     $mongoID = new MongoID($_POST['_id']);

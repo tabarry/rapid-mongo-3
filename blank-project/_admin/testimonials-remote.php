@@ -97,7 +97,7 @@ if ($do == "update") {
     $extraSql = array();
 
     $col = $db->sulata_testimonials;
-    $data = array('testimonial__Name' => suStrip($_POST['testimonial__Name']), 'testimonial__Designation_and_Company' => suStrip($_POST['testimonial__Designation_and_Company']), 'testimonial__Designation_and_Company_slug' => suSlugifyString($_POST['testimonial__Designation_and_Company']), 'testimonial__Location' => suStrip($_POST['testimonial__Location']), 'testimonial__Status' => suStrip($_POST['testimonial__Status']), 'testimonial__Date' => new MongoDate(strtotime(suDate2Db($_POST['testimonial__Date']) . ' ' . date('H:i:s'))), 'testimonial__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'testimonial__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'testimonial__dbState' => 'Live');
+    $data = array('$set' => array('testimonial__Name' => suStrip($_POST['testimonial__Name']), 'testimonial__Designation_and_Company' => suStrip($_POST['testimonial__Designation_and_Company']), 'testimonial__Designation_and_Company_slug' => suSlugifyString($_POST['testimonial__Designation_and_Company']), 'testimonial__Location' => suStrip($_POST['testimonial__Location']), 'testimonial__Status' => suStrip($_POST['testimonial__Status']), 'testimonial__Date' => new MongoDate(strtotime(suDate2Db($_POST['testimonial__Date']) . ' ' . date('H:i:s'))), 'testimonial__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'testimonial__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'testimonial__dbState' => 'Live'));
     $data = array_merge($data, $extraSql);
 
     $mongoID = new MongoID($_POST['_id']);

@@ -123,7 +123,7 @@ if ($do == "update") {
     }
 
     $col = $db->sulata_media_files;
-    $data = array('mediafile__Category' => suStrip($_POST['mediafile__Category']), 'mediafile__Title' => suStrip($_POST['mediafile__Title']), 'mediafile__Title_slug' => suSlugifyString($_POST['mediafile__Title']), 'mediafile__Short_Description' => suStrip($_POST['mediafile__Short_Description']), 'mediafile__Long_Description' => suStrip($_POST['mediafile__Long_Description']), 'mediafile__Sequence' => suStrip($_POST['mediafile__Sequence']), 'mediafile__Date' => new MongoDate(strtotime(suDate2Db($_POST['mediafile__Date']) . ' ' . date('H:i:s'))), 'mediafile__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'mediafile__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'mediafile__dbState' => 'Live');
+    $data = array('$set' => array('mediafile__Category' => suStrip($_POST['mediafile__Category']), 'mediafile__Title' => suStrip($_POST['mediafile__Title']), 'mediafile__Title_slug' => suSlugifyString($_POST['mediafile__Title']), 'mediafile__Short_Description' => suStrip($_POST['mediafile__Short_Description']), 'mediafile__Long_Description' => suStrip($_POST['mediafile__Long_Description']), 'mediafile__Sequence' => suStrip($_POST['mediafile__Sequence']), 'mediafile__Date' => new MongoDate(strtotime(suDate2Db($_POST['mediafile__Date']) . ' ' . date('H:i:s'))), 'mediafile__Last_Action_On' => new MongoDate(strtotime(date('Y-m-d H:i:s'))), 'mediafile__Last_Action_By' => $_SESSION[SESSION_PREFIX . 'user__Name'], 'mediafile__dbState' => 'Live'));
     $data = array_merge($data, $extraSql);
 
     $mongoID = new MongoID($_POST['_id']);
